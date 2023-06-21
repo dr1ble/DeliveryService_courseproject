@@ -2,41 +2,22 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #345830;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.deliveryservice_courseproject.HomePageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #345830;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.deliveryservice_courseproject.MainPageController">
     <children>
-        <PasswordField fx:id="passField" layoutX="263.0" layoutY="309.0" prefHeight="50.0" prefWidth="275.0" promptText="Пароль">
-            <font>
-                <Font name="Calibri Bold" size="20.0" />
-            </font>
-        </PasswordField>
-        <TextField fx:id="logField" layoutX="263.0" layoutY="250.0" prefHeight="50.0" prefWidth="275.0" promptText="Логин">
-            <font>
-                <Font name="Calibri Bold" size="20.0" />
-            </font>
-        </TextField>
-        <Button fx:id="logBtn" layoutX="346.0" layoutY="368.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="109.0" text="Войти">
-            <font>
-                <Font name="Calibri" size="20.0" />
-            </font>
-        </Button>
-        <Button fx:id="regBtn" layoutX="347.0" layoutY="430.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="109.0" text="Регистрация">
+        <Button fx:id="exitBtn" layoutX="677.0" layoutY="558.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="109.0" text="Выйти">
             <font>
                 <Font name="Calibri" size="14.0" />
             </font>
         </Button>
-        <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="300.0" layoutY="14.0">
-            <image>
-                <Image url="@../../../assets/enterlogo.png" />
-            </image>
-        </ImageView>
+      <Text fill="WHITE" layoutX="253.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Здравствуйте, &lt;имя&gt;!">
+         <font>
+            <Font name="Calibri" size="32.0" />
+         </font>
+      </Text>
     </children>
     <cursor>
         <Cursor fx:constant="HAND" />

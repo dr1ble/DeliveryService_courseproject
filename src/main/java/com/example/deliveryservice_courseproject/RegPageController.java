@@ -15,7 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class HomePageController {
+public class RegPageController {
 
     @FXML
     private ResourceBundle resources;
@@ -24,10 +24,19 @@ public class HomePageController {
     private URL location;
 
     @FXML
-    private Button logBtn;
+    private TextField adressField;
 
     @FXML
-    private TextField logField;
+    private Button cancelBtn;
+
+    @FXML
+    private TextField loginField;
+
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private TextField numberField;
 
     @FXML
     private PasswordField passField;
@@ -37,18 +46,13 @@ public class HomePageController {
 
     @FXML
     void initialize() {
-        regBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Utils.changeScene(event, "regpage.fxml", "Регистрация");
-            }
-        });
 
-        logBtn.setOnAction(new EventHandler<ActionEvent>() {
+        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Utils.changeScene(event, "mainpage.fxml", "Главная страница");
+                Utils.changeScene(event, "homepage.fxml", "DeliveryService");
             }
         });
     }
+
 }
