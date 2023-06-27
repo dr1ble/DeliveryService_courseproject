@@ -40,7 +40,7 @@
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </TextField>
-      <TextField fx:id="adressField" layoutX="97.0" layoutY="321.0" prefHeight="50.0" prefWidth="275.0" promptText="Адрес">
+      <TextField fx:id="addressField" layoutX="97.0" layoutY="321.0" prefHeight="50.0" prefWidth="275.0" promptText="Адрес">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
