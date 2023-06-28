@@ -70,5 +70,4 @@ public class DBConnection {
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet.next(); // если есть хотя бы одна строка в результате запроса, значит логин существует
     }
-
 }

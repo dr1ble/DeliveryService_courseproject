@@ -2,11 +2,10 @@ package com.example.deliveryservice_courseproject;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 
 public class MainPageController {
 
@@ -20,14 +19,29 @@ public class MainPageController {
     private Button exitBtn;
 
     @FXML
+    private Button lkBtn;
+
+    @FXML
+    private ImageView lkImage;
+
+    @FXML
+    private Text namefield;
+
+
+    @FXML
     void initialize() {
-        exitBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        namefield.setText("Здравствуйте, " + " john " + " !"); // !!!!!!!!!!!!
+        lkBtn.setOnAction(event -> Utils.changeScene(event, "personalcabinet.fxml", "Личный кабинет"));
+
+        exitBtn.setOnAction(event -> {
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.confirmationMessage("Вы действительно хотите выйти из аккаунта?");
+            if (alertMessage.checkconfirm())
                 Utils.changeScene(event, "homepage.fxml", "DeliveryService");
+            else {
+                ;
             }
         });
-
     }
 
 }

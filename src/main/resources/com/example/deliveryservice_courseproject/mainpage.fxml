@@ -2,22 +2,44 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #345830;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.deliveryservice_courseproject.MainPageController">
     <children>
-        <Button fx:id="exitBtn" layoutX="677.0" layoutY="558.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="109.0" text="Выйти">
-            <font>
-                <Font name="Calibri" size="14.0" />
-            </font>
-        </Button>
-      <Text fill="WHITE" layoutX="253.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Здравствуйте, &lt;имя&gt;!">
+      <Text fx:id="namefield" fill="WHITE" layoutX="511.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="115.0">
          <font>
             <Font name="Calibri" size="32.0" />
          </font>
       </Text>
+      <Text fx:id="namefield" fill="WHITE" layoutX="320.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Здравствуйте,                !">
+         <font>
+            <Font name="Calibri" size="32.0" />
+         </font>
+      </Text>
+      <AnchorPane prefHeight="600.0" prefWidth="125.0" style="-fx-background-color: #113911;">
+         <children>
+            <ImageView fx:id="lkImage" fitHeight="64.0" fitWidth="64.0" layoutX="30.0" layoutY="16.0">
+               <image>
+                  <Image url="@../../../assets/user1.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="10.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Личный кабинет">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font>
+            </Text>
+            <Button fx:id="lkBtn" layoutX="25.0" layoutY="16.0" mnemonicParsing="false" opacity="0.0" prefHeight="64.0" prefWidth="73.0" text="Button" />
+              <Button fx:id="exitBtn" layoutX="7.0" layoutY="565.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="109.0" text="Выйти">
+                  <font>
+                      <Font name="Calibri" size="14.0" />
+                  </font>
+              </Button>
+         </children>
+      </AnchorPane>
     </children>
     <cursor>
         <Cursor fx:constant="HAND" />
