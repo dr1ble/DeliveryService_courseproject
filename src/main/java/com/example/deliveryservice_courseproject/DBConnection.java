@@ -33,17 +33,17 @@ public class DBConnection {
         return instance;
     }
 
-    public void signUpUser(String name, String number, String address, String login, String password) throws SQLException {
+    public void signUpUser(User user) throws SQLException {
         String insertUsers = "INSERT INTO " + DBConsts.USERS_TABLE + "(" + DBConsts.USERS_LOGIN + "," + DBConsts.USERS_PASSWORD + ")" + "VALUES(?,?)" + ";";
         String insertClients = "INSERT INTO " + DBConsts.CLIENTS_TABLE + "(" + DBConsts.CLIENTS_NAME + "," + DBConsts.CLIENTS_NUMBER + "," + DBConsts.CLIENTS_ADDRESS + "," + DBConsts.CLIENTS_LOGIN +")" + "VALUES(?,?,?,?)";
         PreparedStatement preStatementUsers = getConnection().prepareStatement(insertUsers);
-        preStatementUsers.setString(1, login); preStatementUsers.setString(2, HashCoder.toHash(password));
+        preStatementUsers.setString(1, user.getLogin()); preStatementUsers.setString(2, HashCoder.toHash(user.getPassword()));
 
         PreparedStatement preStatementClients = getConnection().prepareStatement(insertClients);
-        preStatementClients.setString(1, name);
-        preStatementClients.setString(2, number);
-        preStatementClients.setString(3, address);
-        preStatementClients.setString(4, login);
+        preStatementClients.setString(1, user.getName());
+        preStatementClients.setString(2, user.getNumber());
+        preStatementClients.setString(3, user.getAddress());
+        preStatementClients.setString(4, user.getLogin());
 
         preStatementUsers.executeUpdate();
         preStatementClients.executeUpdate();

@@ -1,7 +1,10 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.example.deliveryservice_courseproject.AlertMessage;
+import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -37,7 +40,7 @@ public class MainPageController {
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.confirmationMessage("Вы действительно хотите выйти из аккаунта?");
             if (alertMessage.checkconfirm())
-                Utils.changeScene(event, "homepage.fxml", "DeliveryService");
+                Utils.changeScene(event, "loginpage.fxml", "DeliveryService");
             else {
                 ;
             }

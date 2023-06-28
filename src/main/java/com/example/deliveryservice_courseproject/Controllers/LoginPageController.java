@@ -1,24 +1,20 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import com.example.deliveryservice_courseproject.AlertMessage;
+import com.example.deliveryservice_courseproject.DBConnection;
+import com.example.deliveryservice_courseproject.HashCoder;
+import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
-public class HomePageController {
+public class LoginPageController {
 
     @FXML
     private ResourceBundle resources;

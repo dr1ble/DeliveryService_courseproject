@@ -1,9 +1,13 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Controllers;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.example.deliveryservice_courseproject.AlertMessage;
+import com.example.deliveryservice_courseproject.DBConnection;
+import com.example.deliveryservice_courseproject.User;
+import com.example.deliveryservice_courseproject.Utils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -49,14 +53,10 @@ public class RegPageController {
                 if (!nameField.getText().isEmpty() && !numberField.getText().isEmpty() && !addressField.getText().isEmpty()
                         && !loginField.getText().isEmpty() && !passField.getText().isEmpty()) {
                     if (!DBConnection.getInstance().checkLogin(loginField.getText())) {
-                        DBConnection.getInstance().signUpUser(nameField.getText(),
-                                numberField.getText(),
-                                addressField.getText(),
-                                loginField.getText(),
-                                passField.getText());
+                        signUp();
                         System.out.println("Успешная регистрация!");
                         alertMessage.informationMessage("Регистрация прошла успешно");
-                        Utils.changeScene(event, "homepage.fxml", "DeliveryService");
+                        Utils.changeScene(event, "loginpage.fxml", "DeliveryService");
                     } else {
                         System.out.println("Логин уже занят");
                         alertMessage.warningMessage("Логин уже занят. Выберите другой логин");
@@ -73,11 +73,20 @@ public class RegPageController {
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.confirmationMessage("Вы действительно хотите отменить регистрацию?");
             if (alertMessage.checkconfirm())
-                Utils.changeScene(event, "homepage.fxml", "DeliveryService");
+                Utils.changeScene(event, "loginpage.fxml", "DeliveryService");
             else {
                 ;
             }
         });
+    }
+    private void signUp() throws SQLException {
+        String name = nameField.getText();
+        String number = numberField.getText();
+        String address = addressField.getText();
+        String login = loginField.getText();
+        String password = passField.getText();
+
+        DBConnection.getInstance().signUpUser(new User(name, number, address, login, password));
     }
 
 }

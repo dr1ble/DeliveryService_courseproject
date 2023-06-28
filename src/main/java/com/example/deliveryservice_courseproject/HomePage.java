@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class HomePage extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("loginpage.fxml"));
         primaryStage.setTitle("DeliveryService");
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.setResizable(false);
@@ -19,14 +19,5 @@ public class HomePage extends Application {
     }
     public static void main(String[] args) throws SQLException {
         launch();
-        DBConnection db= DBConnection.getInstance();
-        Statement statement = db.getConnection().createStatement();
-        String query = "SELECT * FROM A" ;
-        ResultSet result = statement.executeQuery(query);
-        System.out.println(result);
-        while (result.next()){
-            int id = result.getInt("id");
-            System.out.print(" id = " + id);
-        }
     }
 }

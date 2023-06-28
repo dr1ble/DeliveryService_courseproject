@@ -1,7 +1,9 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
