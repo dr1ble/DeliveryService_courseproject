@@ -44,6 +44,7 @@ public class RegPageController {
     void initialize() throws SQLException {
 
         regBtn.setOnAction(event -> {
+            AlertMessage alertMessage = new AlertMessage();
             try {
                 if (!nameField.getText().isEmpty() && !numberField.getText().isEmpty() && !addressField.getText().isEmpty()
                         && !loginField.getText().isEmpty() && !passField.getText().isEmpty()) {
@@ -54,20 +55,29 @@ public class RegPageController {
                                 loginField.getText(),
                                 passField.getText());
                         System.out.println("Успешная регистрация!");
+                        alertMessage.informationMessage("Регистрация прошла успешно");
                         Utils.changeScene(event, "homepage.fxml", "DeliveryService");
-                    }
-                    else{
+                    } else {
                         System.out.println("Логин уже занят");
+                        alertMessage.warningMessage("Логин уже занят. Выберите другой логин");
                     }
-                }
-                else{
+                } else {
+                    alertMessage.errorMessage("Регистрационные поля не заполнены!");
                     System.out.println("Регистрационные поля не заполнены!");
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
-        cancelBtn.setOnAction(event -> Utils.changeScene(event, "homepage.fxml", "DeliveryService"));
+        cancelBtn.setOnAction(event -> {
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.confirmationMessage("Вы действительно хотите отменить регистрацию?");
+            if (alertMessage.checkconfirm())
+                Utils.changeScene(event, "homepage.fxml", "DeliveryService");
+            else {
+                ;
+            }
+        });
     }
 
 }

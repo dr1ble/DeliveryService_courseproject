@@ -37,7 +37,7 @@ public class DBConnection {
         String insertUsers = "INSERT INTO " + DBConsts.USERS_TABLE + "(" + DBConsts.USERS_LOGIN + "," + DBConsts.USERS_PASSWORD + ")" + "VALUES(?,?)" + ";";
         String insertClients = "INSERT INTO " + DBConsts.CLIENTS_TABLE + "(" + DBConsts.CLIENTS_NAME + "," + DBConsts.CLIENTS_NUMBER + "," + DBConsts.CLIENTS_ADDRESS + "," + DBConsts.CLIENTS_LOGIN +")" + "VALUES(?,?,?,?)";
         PreparedStatement preStatementUsers = getConnection().prepareStatement(insertUsers);
-        preStatementUsers.setString(1, login); preStatementUsers.setString(2, password);
+        preStatementUsers.setString(1, login); preStatementUsers.setString(2, HashCoder.toHash(password));
 
         PreparedStatement preStatementClients = getConnection().prepareStatement(insertClients);
         preStatementClients.setString(1, name);

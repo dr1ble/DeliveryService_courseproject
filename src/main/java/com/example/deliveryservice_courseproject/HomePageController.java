@@ -44,6 +44,7 @@ public class HomePageController {
 
 //        logBtn.setOnAction(event -> Utils.changeScene(event, "mainpage.fxml", "Главная страница"));
         logBtn.setOnAction(event -> {
+            AlertMessage alertMessage = new AlertMessage();
             String login = logField.getText().trim();
             String password = passField.getText().trim();
             if(!login.equals("") && !password.equals("")){
@@ -52,10 +53,11 @@ public class HomePageController {
                         Utils.changeScene(event, "mainpage.fxml", "Главная страница");
                     }
                     else{
+                        alertMessage.errorMessage("Такого пользователя не существует!");
                         System.out.println("Такого пользователя не существует!");
-                        passField.setStyle("-fx-text-box-border: #B22222; -fx-focus-color: #B22222;");
+                        passField.setStyle("-fx-text-box-border: #ff0000; -fx-focus-color: #ff0000;");
                         passField.clear();
-                        logField.setStyle("-fx-text-box-border: #B22222; -fx-focus-color: #B22222;");
+                        logField.setStyle("-fx-text-box-border: #ff0000; -fx-focus-color: #ff0000;");
                         logField.clear();
                     }
                 } catch (SQLException e) {
@@ -63,10 +65,11 @@ public class HomePageController {
                 }
             }
             else{
+                alertMessage.warningMessage("Логин или пароль не введены!");
                 System.out.println("Логин или пароль не введены");
-                passField.setStyle("-fx-text-box-border: #B22222; -fx-focus-color: #B22222;");
+                passField.setStyle("-fx-text-box-border: #ff0000; -fx-focus-color: #ff0000;");
                 passField.clear();
-                logField.setStyle("-fx-text-box-border: #B22222; -fx-focus-color: #B22222;");
+                logField.setStyle("-fx-text-box-border: #ff0000; -fx-focus-color: #ff0000;");
                 logField.clear();
             }
         });
@@ -74,9 +77,9 @@ public class HomePageController {
 
     private boolean loginUser(String login, String password) throws SQLException {
 
-        DBConnection.getInstance().getUser(login, password);
+        DBConnection.getInstance().getUser(login, HashCoder.toHash(password));
 
-        ResultSet resultSet = DBConnection.getInstance().getUser(login, password);
+        ResultSet resultSet = DBConnection.getInstance().getUser(login, HashCoder.toHash(password));
         int count = 0;
         while (resultSet.next()){
             count++;
