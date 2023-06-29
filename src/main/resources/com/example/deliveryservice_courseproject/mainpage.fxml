@@ -7,17 +7,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #345830;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.deliveryservice_courseproject.Controllers.MainPageController">
     <children>
-      <Text fx:id="namefield" fill="WHITE" layoutX="511.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="115.0">
+      <Text fx:id="namefield" fill="WHITE" layoutX="221.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="                " wrappingWidth="516.7734375">
          <font>
-            <Font name="Calibri" size="32.0" />
-         </font>
-      </Text>
-      <Text fx:id="namefield" fill="WHITE" layoutX="320.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Здравствуйте,                !">
-         <font>
-            <Font name="Calibri" size="32.0" />
+            <Font name="Calibri Bold" size="45.0" />
          </font>
       </Text>
       <AnchorPane prefHeight="600.0" prefWidth="125.0" style="-fx-background-color: #113911;">
@@ -40,6 +36,7 @@
               </Button>
          </children>
       </AnchorPane>
+      <TextFlow fx:id="textField" layoutX="514.0" layoutY="25.0" prefHeight="45.0" prefWidth="200.0" />
     </children>
     <cursor>
         <Cursor fx:constant="HAND" />

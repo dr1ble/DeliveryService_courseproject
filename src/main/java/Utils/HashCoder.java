@@ -1,4 +1,4 @@
-package com.example.deliveryservice_courseproject;
+package Utils;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

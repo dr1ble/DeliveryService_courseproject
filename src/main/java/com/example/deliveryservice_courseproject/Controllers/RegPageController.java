@@ -4,12 +4,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.example.deliveryservice_courseproject.AlertMessage;
+import Utils.AlertMessage;
 import com.example.deliveryservice_courseproject.DBConnection;
 import com.example.deliveryservice_courseproject.User;
 import com.example.deliveryservice_courseproject.Utils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;

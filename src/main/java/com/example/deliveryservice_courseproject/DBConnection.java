@@ -1,5 +1,7 @@
 package com.example.deliveryservice_courseproject;
 
+import Utils.HashCoder;
+
 import java.sql.*;
 
 public class DBConnection {
@@ -69,5 +71,24 @@ public class DBConnection {
         preparedStatement.setString(1, login);
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet.next(); // если есть хотя бы одна строка в результате запроса, значит логин существует
+    }
+    public User getUserData(String login, String password) throws SQLException{
+        ResultSet resultSet = null;
+        String selectUserdata = "SELECT " + DBConsts.CLIENTS_NAME + ", " + DBConsts.CLIENTS_NUMBER + ", " + DBConsts.CLIENTS_ADDRESS + " FROM " + DBConsts.CLIENTS_TABLE +
+                " JOIN " + DBConsts.USERS_TABLE + " ON " + DBConsts.CLIENTS_TABLE + "." + DBConsts.CLIENTS_LOGIN + "=" + DBConsts.USERS_TABLE + "." + DBConsts.USERS_LOGIN +
+                " WHERE " + DBConsts.USERS_TABLE + "." + DBConsts.CLIENTS_LOGIN  + "=?";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(selectUserdata);
+        preparedStatement.setString(1, login);
+        resultSet = preparedStatement.executeQuery();
+        User user = null;
+
+        if (resultSet.next()) {
+            String name = resultSet.getString(DBConsts.CLIENTS_NAME);
+            String number = resultSet.getString(DBConsts.CLIENTS_NUMBER);
+            String address = resultSet.getString(DBConsts.CLIENTS_ADDRESS);
+            user = new User(name, number, address, login, HashCoder.toHash(password));
+        }
+
+        return user;
     }
 }

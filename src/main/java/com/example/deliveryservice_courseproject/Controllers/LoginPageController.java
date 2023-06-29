@@ -1,13 +1,12 @@
 package com.example.deliveryservice_courseproject.Controllers;
 
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.example.deliveryservice_courseproject.AlertMessage;
-import com.example.deliveryservice_courseproject.DBConnection;
-import com.example.deliveryservice_courseproject.HashCoder;
+import Models.LoginPageModel;
+import Utils.AlertMessage;
+import Models.Data;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,6 +14,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class LoginPageController {
+    Data data = Data.getInstance();
+    LoginPageModel loginPageModel = new LoginPageModel();
 
     @FXML
     private ResourceBundle resources;
@@ -45,7 +46,8 @@ public class LoginPageController {
             String password = passField.getText().trim();
             if(!login.equals("") && !password.equals("")){
                 try {
-                    if(loginUser(login, password)) {
+                    if(loginPageModel.loginUser(login,password)) {
+                        data.setUser(loginPageModel.getUser());
                         Utils.changeScene(event, "mainpage.fxml", "Главная страница");
                     }
                     else{
@@ -71,19 +73,4 @@ public class LoginPageController {
         });
     }
 
-    private boolean loginUser(String login, String password) throws SQLException {
-
-        DBConnection.getInstance().getUser(login, HashCoder.toHash(password));
-
-        ResultSet resultSet = DBConnection.getInstance().getUser(login, HashCoder.toHash(password));
-        int count = 0;
-        while (resultSet.next()){
-            count++;
-        }
-        if(count>=1){
-            System.out.println("Success authorization! Hello " + login + "!");
-            return true;
-        }
-        return false;
-    }
 }

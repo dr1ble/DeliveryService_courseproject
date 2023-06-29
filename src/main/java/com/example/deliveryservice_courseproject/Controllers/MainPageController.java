@@ -3,14 +3,19 @@ package com.example.deliveryservice_courseproject.Controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.example.deliveryservice_courseproject.AlertMessage;
+import Models.MainPageModel;
+import Utils.AlertMessage;
+import Models.Data;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class MainPageController {
+    Data data = Data.getInstance();
+    MainPageModel mainPageModel = new MainPageModel();
 
     @FXML
     private ResourceBundle resources;
@@ -31,9 +36,11 @@ public class MainPageController {
     private Text namefield;
 
 
+
     @FXML
     void initialize() {
-        namefield.setText("Здравствуйте, " + " john " + " !"); // !!!!!!!!!!!!
+//        mainPageModel.getUser().getName()
+        namefield.setText("Здравствуйте, " + data.getUser().getName() + " !"); // !!!!!!!!!!!!
         lkBtn.setOnAction(event -> Utils.changeScene(event, "personalcabinet.fxml", "Личный кабинет"));
 
         exitBtn.setOnAction(event -> {
