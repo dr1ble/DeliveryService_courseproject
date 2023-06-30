@@ -37,18 +37,37 @@ public class DBConnection {
 
     public void signUpUser(User user) throws SQLException {
         String insertUsers = "INSERT INTO " + DBConsts.USERS_TABLE + "(" + DBConsts.USERS_LOGIN + "," + DBConsts.USERS_PASSWORD + ")" + "VALUES(?,?)" + ";";
-        String insertClients = "INSERT INTO " + DBConsts.CLIENTS_TABLE + "(" + DBConsts.CLIENTS_NAME + "," + DBConsts.CLIENTS_NUMBER + "," + DBConsts.CLIENTS_ADDRESS + "," + DBConsts.CLIENTS_LOGIN +")" + "VALUES(?,?,?,?)";
         PreparedStatement preStatementUsers = getConnection().prepareStatement(insertUsers);
         preStatementUsers.setString(1, user.getLogin()); preStatementUsers.setString(2, HashCoder.toHash(user.getPassword()));
+        preStatementUsers.executeUpdate();
+
+        signUpClient(user);
+    }
+
+    public void signUpClient(User user) throws SQLException {
+        String insertClients = "INSERT INTO " + DBConsts.CLIENTS_TABLE + "(" + DBConsts.CLIENTS_NAME + "," + DBConsts.CLIENTS_NUMBER + "," + DBConsts.CLIENTS_ADDRESS + "," + DBConsts.CLIENTS_USERID +")" + "VALUES(?,?,?,?)";
 
         PreparedStatement preStatementClients = getConnection().prepareStatement(insertClients);
         preStatementClients.setString(1, user.getName());
         preStatementClients.setString(2, user.getNumber());
         preStatementClients.setString(3, user.getAddress());
-        preStatementClients.setString(4, user.getLogin());
+        preStatementClients.setString(4, getID(user.getLogin()));
 
-        preStatementUsers.executeUpdate();
         preStatementClients.executeUpdate();
+    }
+
+        public String getID(String login) throws SQLException {
+        ResultSet resultSet = null;
+        String getId = "SELECT id FROM " + DBConsts.USERS_TABLE + " WHERE " + DBConsts.USERS_LOGIN + "=?";
+        PreparedStatement ps = getConnection().prepareStatement(getId);
+        ps.setString(1, login);
+        resultSet = ps.executeQuery();
+
+        String id = null;
+        if (resultSet.next()) {
+            id = resultSet.getString((DBConsts.USERS_ID));
+        }
+        return id;
     }
 
     public ResultSet getUser(String login, String password) throws SQLException {
@@ -75,8 +94,8 @@ public class DBConnection {
     public User getUserData(String login, String password) throws SQLException{
         ResultSet resultSet = null;
         String selectUserdata = "SELECT " + DBConsts.CLIENTS_NAME + ", " + DBConsts.CLIENTS_NUMBER + ", " + DBConsts.CLIENTS_ADDRESS + " FROM " + DBConsts.CLIENTS_TABLE +
-                " JOIN " + DBConsts.USERS_TABLE + " ON " + DBConsts.CLIENTS_TABLE + "." + DBConsts.CLIENTS_LOGIN + "=" + DBConsts.USERS_TABLE + "." + DBConsts.USERS_LOGIN +
-                " WHERE " + DBConsts.USERS_TABLE + "." + DBConsts.CLIENTS_LOGIN  + "=?";
+                " JOIN " + DBConsts.USERS_TABLE + " ON " + DBConsts.CLIENTS_TABLE + "." + DBConsts.CLIENTS_USERID + "=" + DBConsts.USERS_TABLE + "." + DBConsts.USERS_ID +
+                " WHERE " + DBConsts.USERS_TABLE + "." + DBConsts.USERS_LOGIN  + "=?";
         PreparedStatement preparedStatement = getConnection().prepareStatement(selectUserdata);
         preparedStatement.setString(1, login);
         resultSet = preparedStatement.executeQuery();
@@ -90,5 +109,60 @@ public class DBConnection {
         }
 
         return user;
+    }
+
+    public void updatePass(String login, String password) throws SQLException {
+        String updateUsers = "UPDATE " + DBConsts.USERS_TABLE + " SET " + DBConsts.USERS_PASSWORD + "=?" + " WHERE " + DBConsts.USERS_LOGIN + "=? ";
+
+        PreparedStatement preStatementUpdateUsers = getConnection().prepareStatement(updateUsers);
+
+        preStatementUpdateUsers.setString(1, password);
+        preStatementUpdateUsers.setString(2, login);
+
+        preStatementUpdateUsers.executeUpdate();
+    }
+
+    public void updateLogin(String login, String newlogin) throws SQLException {
+        String updateUsers = "UPDATE " + DBConsts.USERS_TABLE + " SET " + DBConsts.USERS_LOGIN + "=?" + " WHERE " +
+        DBConsts.CLIENTS_LOGIN + "=?";
+
+        PreparedStatement preStatementUpdateUsers = getConnection().prepareStatement(updateUsers);
+
+        preStatementUpdateUsers.setString(1, newlogin);
+        preStatementUpdateUsers.setString(2, login);
+        preStatementUpdateUsers.executeUpdate();
+    }
+
+    public void updateName(String login, String newname) throws SQLException {
+        String updateUsers = "UPDATE " + DBConsts.CLIENTS_TABLE + " SET " + DBConsts.CLIENTS_NAME + "=?" + " WHERE " +
+                DBConsts.CLIENTS_USERID + "=?";
+
+        PreparedStatement preStatementUpdateUsers = getConnection().prepareStatement(updateUsers);
+
+        preStatementUpdateUsers.setString(1, newname);
+        preStatementUpdateUsers.setString(2, getID(login));
+        preStatementUpdateUsers.executeUpdate();
+    }
+
+    public void updateNumber(String login, String newNumber) throws SQLException {
+        String updateUsers = "UPDATE " + DBConsts.CLIENTS_TABLE + " SET " + DBConsts.CLIENTS_NUMBER + "=?" + " WHERE " +
+                DBConsts.CLIENTS_USERID + "=?";
+
+        PreparedStatement preStatementUpdateUsers = getConnection().prepareStatement(updateUsers);
+
+        preStatementUpdateUsers.setString(1, newNumber);
+        preStatementUpdateUsers.setString(2, getID(login));
+        preStatementUpdateUsers.executeUpdate();
+    }
+
+    public void updateAddress(String login, String newAddress) throws SQLException {
+        String updateUsers = "UPDATE " + DBConsts.CLIENTS_TABLE + " SET " + DBConsts.CLIENTS_NUMBER + "=?" + " WHERE " +
+                DBConsts.CLIENTS_USERID + "=?";
+
+        PreparedStatement preStatementUpdateUsers = getConnection().prepareStatement(updateUsers);
+
+        preStatementUpdateUsers.setString(1, newAddress);
+        preStatementUpdateUsers.setString(2, getID(login));
+        preStatementUpdateUsers.executeUpdate();
     }
 }

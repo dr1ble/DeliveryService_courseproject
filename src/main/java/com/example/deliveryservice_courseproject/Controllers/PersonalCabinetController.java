@@ -47,5 +47,7 @@ public class PersonalCabinetController {
         loginText.setText(data.getUser().getLogin());
         passwordText.setText(data.getUser().getPassword());
         backBtn.setOnAction(event -> Utils.changeScene(event, "mainpage.fxml", "Главная страница"));
+
+        chngdataBtn.setOnAction(event -> Utils.changeScene(event, "changepersonaldata.fxml", "Изменить персональный данные"));
     }
 }
