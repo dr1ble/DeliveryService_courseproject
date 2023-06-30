@@ -5,17 +5,58 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #345830;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.deliveryservice_courseproject.Controllers.MainPageController">
     <children>
-      <Text fx:id="namefield" fill="WHITE" layoutX="221.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="                " wrappingWidth="516.7734375">
-         <font>
-            <Font name="Calibri Bold" size="45.0" />
-         </font>
-      </Text>
+      <GridPane gridLinesVisible="true" layoutX="124.0" layoutY="71.0" prefHeight="530.0" prefWidth="677.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="sendPackageBtn" mnemonicParsing="false" opacity="0.0" prefHeight="130.0" prefWidth="132.0" text="Отправить посылку" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <ImageView fitHeight="137.0" fitWidth="131.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../../../assets/sendpackage.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Отправить посылку" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="108.0" fitWidth="110.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../../../assets/mypackages.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Мои отправления" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font>
+            </Text>
+            <Button fx:id="myPackagesBtn" mnemonicParsing="false" opacity="0.0" prefHeight="125.0" prefWidth="132.0" text="Отправить посылку" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children>
+      </GridPane>
+      <AnchorPane layoutX="125.0" prefHeight="71.0" prefWidth="677.0" style="-fx-background-color: #142B14;">
+         <children>
+            <Text fx:id="namefield" fill="WHITE" layoutX="80.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HELLOMESSAGE" textAlignment="CENTER" wrappingWidth="516.7734375">
+               <font>
+                  <Font name="Calibri Bold" size="45.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
       <AnchorPane prefHeight="600.0" prefWidth="125.0" style="-fx-background-color: #113911;">
          <children>
             <ImageView fx:id="lkImage" fitHeight="64.0" fitWidth="64.0" layoutX="30.0" layoutY="16.0">
@@ -36,7 +77,6 @@
               </Button>
          </children>
       </AnchorPane>
-      <TextFlow fx:id="textField" layoutX="514.0" layoutY="25.0" prefHeight="45.0" prefWidth="200.0" />
     </children>
     <cursor>
         <Cursor fx:constant="HAND" />

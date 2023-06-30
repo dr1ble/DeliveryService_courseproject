@@ -35,6 +35,11 @@ public class MainPageController {
     @FXML
     private Text namefield;
 
+    @FXML
+    private Button sendPackageBtn;
+
+    @FXML
+    private Button myPackagesBtn;
 
 
     @FXML
@@ -42,12 +47,16 @@ public class MainPageController {
 //        mainPageModel.getUser().getName()
         namefield.setText("Здравствуйте, " + data.getUser().getName() + " !"); // !!!!!!!!!!!!
         lkBtn.setOnAction(event -> Utils.changeScene(event, "personalcabinet.fxml", "Личный кабинет"));
+        sendPackageBtn.setOnAction(event -> Utils.changeScene(event,"sendpackagepage.fxml", "Отправить посылку"));
+
 
         exitBtn.setOnAction(event -> {
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.confirmationMessage("Вы действительно хотите выйти из аккаунта?");
-            if (alertMessage.checkconfirm())
+            if (alertMessage.checkconfirm()) {
                 Utils.changeScene(event, "loginpage.fxml", "DeliveryService");
+                Data.getInstance().setUser(null);
+            }
             else {
                 ;
             }

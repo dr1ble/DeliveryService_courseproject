@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #345830;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.deliveryservice_courseproject.Controllers.SendPackagePageController">
+    <children>
+        <Text fill="WHITE" layoutX="248.0" layoutY="52.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Отправить посылку">
+            <font>
+                <Font name="Calibri Bold" size="50.0" />
+            </font>
+        </Text>
+        <AnchorPane prefHeight="600.0" prefWidth="125.0" style="-fx-background-color: #113911;">
+            <children>
+                <Button fx:id="backBtn" layoutX="7.0" layoutY="565.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="109.0" text="Назад">
+                    <font>
+                        <Font name="Calibri" size="14.0" />
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
+      <ChoiceBox fx:id="toWho" layoutX="154.0" layoutY="158.0" prefHeight="25.0" prefWidth="220.0" />
+      <Text fill="WHITE" layoutX="218.0" layoutY="148.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Кому">
+         <font>
+            <Font name="Calibri Bold" size="40.0" />
+         </font>
+      </Text>
+      <CheckBox fx:id="usualCheckBox" layoutX="490.0" layoutY="164.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="80.0" text="Обычная" textFill="WHITE">
+         <tooltip>
+            <Tooltip text="5-7 дней" />
+         </tooltip>
+      </CheckBox>
+      <Text fill="WHITE" layoutX="460.0" layoutY="148.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Тип доставки">
+         <font>
+            <Font name="Calibri Bold" size="40.0" />
+         </font>
+      </Text>
+      <CheckBox fx:id="fastCheckBox" layoutX="587.0" layoutY="164.0" mnemonicParsing="false" text="Быстрая" textFill="WHITE">
+         <tooltip>
+            <Tooltip text="2-4 дня" />
+         </tooltip>
+      </CheckBox>
+      <Text fill="WHITE" layoutX="460.0" layoutY="330.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Вес посылки">
+         <font>
+            <Font name="Calibri Bold" size="40.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="weightField" layoutX="460.0" layoutY="340.0" prefHeight="2.0" prefWidth="220.0" promptText="Укажите вес посылки">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+      </TextArea>
+      <Button fx:id="sendBtn" layoutX="345.0" layoutY="558.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="231.0" text="Отправить">
+         <font>
+            <Font name="Calibri" size="14.0" />
+         </font>
+      </Button>
+      <Text fx:id="packageIDtext" fill="WHITE" layoutX="288.0" layoutY="498.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="344.13671875">
+         <font>
+            <Font name="Calibri" size="30.0" />
+         </font>
+      </Text>
+    </children>
+    <cursor>
+        <Cursor fx:constant="HAND" />
+    </cursor>
+</AnchorPane>

@@ -8,9 +8,9 @@ public class DBConnection {
 
     private static DBConnection instance;
     private Connection connection;
-    private String url = "jdbc:mysql://std-mysql.ist.mospolytech.ru:3306/std_2289_deliveryservice";
-    private String username = "std_2289_deliveryservice";
-    private String password = "qwerty123";
+    private final String url = "jdbc:mysql://std-mysql.ist.mospolytech.ru:3306/std_2289_deliveryservice";
+    private final String username = "std_2289_deliveryservice";
+    private final String password = "qwerty123";
 
 
     private DBConnection() throws SQLException {
@@ -164,5 +164,42 @@ public class DBConnection {
         preStatementUpdateUsers.setString(1, newAddress);
         preStatementUpdateUsers.setString(2, getID(login));
         preStatementUpdateUsers.executeUpdate();
+    }
+    public ResultSet getClients(String login) throws SQLException {
+        ResultSet resultSet = null;
+//        String getClients = "SELECT " + DBConsts.CLIENTS_USERID + "," + DBConsts.CLIENTS_NAME + "," + DBConsts.CLIENTS_NUMBER + " FROM " + DBConsts.CLIENTS_TABLE
+//                + " WHERE" + DBConsts.USERS_ID + "<>" + "=?";
+        String getClients = "SELECT  user_id, name, number FROM clients WHERE user_id NOT IN (" + "?)";
+
+        PreparedStatement psGetClients = getConnection().prepareStatement(getClients);
+
+        psGetClients.setString(1, getID(login));
+
+        resultSet = psGetClients.executeQuery();
+        return resultSet;
+    }
+
+
+    public void startDelivery(String senderId, String recieverId, String type, String weight, String status) throws SQLException {
+        String insertPackages = "INSERT INTO " + DBConsts.PACKAGES_TABLE + "(" + DBConsts.PACKAGES_TYPEOFDELIVERY + "," + DBConsts.PACKAGES_WEIGHT + "," + DBConsts.PACKAGES_STATUS +
+                "," + DBConsts.PACKAGES_SENDERID + "," + DBConsts.PACKAGES_RECIPIENTID + ")" + "VALUES(?,?,?,?,?)" + ";";
+        PreparedStatement preStatementInsertPackages = getConnection().prepareStatement(insertPackages);
+        preStatementInsertPackages.setString(1, type); preStatementInsertPackages.setString(2, weight);
+        preStatementInsertPackages.setString(3, status); preStatementInsertPackages.setString(4, senderId); preStatementInsertPackages.setString(5, recieverId);
+        preStatementInsertPackages.executeUpdate();
+
+    }
+
+    public String getPackageId() throws SQLException {
+        ResultSet resultSet = null;
+        String getPackageId =  "SELECT ID FROM packages ORDER BY ID desc LIMIT 1";
+        PreparedStatement psGetId = getConnection().prepareStatement(getPackageId);
+        resultSet = psGetId.executeQuery();
+
+        String id  = "";
+        if (resultSet.next()) {
+            id = resultSet.getString("id");
+        }
+        return id;
     }
 }
