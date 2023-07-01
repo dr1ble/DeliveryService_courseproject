@@ -48,6 +48,7 @@ public class LoginPageController {
                 try {
                     if(loginPageModel.loginUser(login,password)) {
                         data.setUser(loginPageModel.getUser());
+                        data.setClient(loginPageModel.getClient());
                         Utils.changeScene(event, "mainpage.fxml", "Главная страница");
                     }
                     else{

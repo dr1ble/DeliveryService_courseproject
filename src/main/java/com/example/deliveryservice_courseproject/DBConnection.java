@@ -1,6 +1,8 @@
 package com.example.deliveryservice_courseproject;
 
 import Utils.HashCoder;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 
@@ -38,19 +40,20 @@ public class DBConnection {
     public void signUpUser(User user) throws SQLException {
         String insertUsers = "INSERT INTO " + DBConsts.USERS_TABLE + "(" + DBConsts.USERS_LOGIN + "," + DBConsts.USERS_PASSWORD + ")" + "VALUES(?,?)" + ";";
         PreparedStatement preStatementUsers = getConnection().prepareStatement(insertUsers);
-        preStatementUsers.setString(1, user.getLogin()); preStatementUsers.setString(2, HashCoder.toHash(user.getPassword()));
-        preStatementUsers.executeUpdate();
 
-        signUpClient(user);
+        preStatementUsers.setString(1, user.getLogin());
+        preStatementUsers.setString(2, HashCoder.toHash(user.getPassword()));
+
+        preStatementUsers.executeUpdate();
     }
 
-    public void signUpClient(User user) throws SQLException {
+    public void signUpClient(Client client, User user) throws SQLException {
         String insertClients = "INSERT INTO " + DBConsts.CLIENTS_TABLE + "(" + DBConsts.CLIENTS_NAME + "," + DBConsts.CLIENTS_NUMBER + "," + DBConsts.CLIENTS_ADDRESS + "," + DBConsts.CLIENTS_USERID +")" + "VALUES(?,?,?,?)";
 
         PreparedStatement preStatementClients = getConnection().prepareStatement(insertClients);
-        preStatementClients.setString(1, user.getName());
-        preStatementClients.setString(2, user.getNumber());
-        preStatementClients.setString(3, user.getAddress());
+        preStatementClients.setString(1, client.getName());
+        preStatementClients.setString(2, client.getNumber());
+        preStatementClients.setString(3, client.getAddress());
         preStatementClients.setString(4, getID(user.getLogin()));
 
         preStatementClients.executeUpdate();
@@ -102,13 +105,30 @@ public class DBConnection {
         User user = null;
 
         if (resultSet.next()) {
+            user = new User(login, HashCoder.toHash(password));
+        }
+        return user;
+    }
+
+    public Client getClientData(String login) throws SQLException{
+        ResultSet resultSet = null;
+//        String selectUserdata = "SELECT " + DBConsts.CLIENTS_ID + " AS client_id" + ", " + DBConsts.CLIENTS_NAME + ", " + DBConsts.CLIENTS_NUMBER + ", " + DBConsts.CLIENTS_ADDRESS + " FROM " + DBConsts.CLIENTS_TABLE +
+//                " JOIN " + DBConsts.USERS_TABLE + " ON " + DBConsts.CLIENTS_TABLE + "." + DBConsts.CLIENTS_USERID + "=" + DBConsts.USERS_TABLE + "." + DBConsts.USERS_ID +
+//                " WHERE " + DBConsts.USERS_TABLE + "." + DBConsts.USERS_LOGIN  + "=?";
+        String selectUserdata = "SELECT clients.id, clients.name, clients.number, clients.address FROM clients JOIN users ON clients.user_id = users.id WHERE login" + "=?";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(selectUserdata);
+        preparedStatement.setString(1, login);
+        resultSet = preparedStatement.executeQuery();
+        Client client = null;
+
+        if (resultSet.next()) {
+            String id = resultSet.getString("id");
             String name = resultSet.getString(DBConsts.CLIENTS_NAME);
             String number = resultSet.getString(DBConsts.CLIENTS_NUMBER);
             String address = resultSet.getString(DBConsts.CLIENTS_ADDRESS);
-            user = new User(name, number, address, login, HashCoder.toHash(password));
+            client = new Client(id, name, number, address, "","");
         }
-
-        return user;
+        return client;
     }
 
     public void updatePass(String login, String password) throws SQLException {
@@ -201,5 +221,19 @@ public class DBConnection {
             id = resultSet.getString("id");
         }
         return id;
+    }
+
+    public ObservableList<Package> getDataPackagesForCurrent(String id, String who) throws SQLException {
+        ObservableList<Package> list = FXCollections.observableArrayList();
+        PreparedStatement ps = getConnection().prepareStatement("select * from packages where " +  who + " =?");
+        ps.setString(1, id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            list.add(new Package(rs.getString("id"),rs.getString("type_of_delivery"),
+                    rs.getString("weight"), rs.getString("status"), rs.getString("date_start"),
+                    rs.getString("date_end"), rs.getString("courier_id"), rs.getString("sender_id"),
+                    rs.getString("recipient_id"), rs.getString("departcenter_id"), rs.getString("receivingcenter_id")));
+        }
+        return list;
     }
 }

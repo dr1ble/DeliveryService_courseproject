@@ -45,9 +45,10 @@ public class MainPageController {
     @FXML
     void initialize() {
 //        mainPageModel.getUser().getName()
-        namefield.setText("Здравствуйте, " + data.getUser().getName() + " !"); // !!!!!!!!!!!!
+        namefield.setText("Здравствуйте, " + data.getClient().getName() + " !"); // !!!!!!!!!!!!
         lkBtn.setOnAction(event -> Utils.changeScene(event, "personalcabinet.fxml", "Личный кабинет"));
         sendPackageBtn.setOnAction(event -> Utils.changeScene(event,"sendpackagepage.fxml", "Отправить посылку"));
+        myPackagesBtn.setOnAction(event -> Utils.changeScene(event, "mypackagespage.fxml", "Отправления"));
 
 
         exitBtn.setOnAction(event -> {

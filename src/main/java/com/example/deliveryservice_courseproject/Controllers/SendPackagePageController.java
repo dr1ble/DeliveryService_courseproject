@@ -65,7 +65,7 @@ public class SendPackagePageController {
         sendBtn.setOnAction(event -> {
             try {
                 AlertMessage alertMessage = new AlertMessage();
-                if(!toWho.getSelectionModel().isEmpty() && (!fastCheckBox.isSelected() || usualCheckBox.isSelected())
+                if(!toWho.getSelectionModel().isEmpty() && (!fastCheckBox.isSelected() || !usualCheckBox.isSelected())
                 && !weightField.getText().isEmpty()) {
                     DBConnection.getInstance().startDelivery(DBConnection.getInstance().getID(data.getUser().getLogin()),
                             toWho.getSelectionModel().getSelectedItem().split(" ")[0], fastCheckBox.isSelected() ? "1" : "0",

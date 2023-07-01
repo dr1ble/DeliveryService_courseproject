@@ -69,7 +69,7 @@
                   <Font name="Calibri" size="15.0" />
                </font>
             </Text>
-            <Button fx:id="lkBtn" layoutX="25.0" layoutY="16.0" mnemonicParsing="false" opacity="0.0" prefHeight="64.0" prefWidth="73.0" text="Button" />
+            <Button fx:id="lkBtn" layoutX="9.0" layoutY="9.0" mnemonicParsing="false" opacity="0.0" prefHeight="88.0" prefWidth="109.0" text="Button" />
               <Button fx:id="exitBtn" layoutX="7.0" layoutY="565.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="109.0" text="Выйти">
                   <font>
                       <Font name="Calibri" size="14.0" />

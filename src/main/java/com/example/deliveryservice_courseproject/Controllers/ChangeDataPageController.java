@@ -83,7 +83,7 @@ public class ChangeDataPageController {
                 }
                 if(!changeNameField.getText().isEmpty()){
                     DBConnection.getInstance().updateName(data.getUser().getLogin(), changeNameField.getText());
-                    Data.getInstance().getUser().setName(changeNameField.getText());
+                    Data.getInstance().getClient().setName(changeNameField.getText());
                     System.out.println("Имя изменено!");
                 }
                 else{
@@ -91,7 +91,7 @@ public class ChangeDataPageController {
                 }
                 if(!changeNumberField.getText().isEmpty()){
                     DBConnection.getInstance().updateNumber(data.getUser().getLogin(), changeNumberField.getText());
-                    Data.getInstance().getUser().setNumber(changeNumberField.getText());
+                    Data.getInstance().getClient().setNumber(changeNumberField.getText());
                     System.out.println("Номер изменен!");
                 }
                 else{
@@ -99,7 +99,7 @@ public class ChangeDataPageController {
                 }
                 if(!changeAddressField.getText().isEmpty()){
                     DBConnection.getInstance().updateAddress(data.getUser().getLogin(), changeAddressField.getText());
-                    Data.getInstance().getUser().setAddress(changeAddressField.getText());
+                    Data.getInstance().getClient().setAddress(changeAddressField.getText());
                     System.out.println("Адрес изменен!");
                 }
                 else{

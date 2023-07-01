@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import Utils.AlertMessage;
+import com.example.deliveryservice_courseproject.Client;
 import com.example.deliveryservice_courseproject.DBConnection;
 import com.example.deliveryservice_courseproject.User;
 import com.example.deliveryservice_courseproject.Utils;
@@ -84,7 +85,10 @@ public class RegPageController {
         String login = loginField.getText();
         String password = passField.getText();
 
-        DBConnection.getInstance().signUpUser(new User(name, number, address, login, password));
+        User user = new User(login, password);
+        Client client = new Client("", name, number, address, "", "");
+        DBConnection.getInstance().signUpUser(user);
+        DBConnection.getInstance().signUpClient(client, user);
     }
 
 }

@@ -41,9 +41,9 @@ public class PersonalCabinetController {
 
     @FXML
     void initialize() {
-        nameText.setText(data.getUser().getName());
-        numberText.setText(data.getUser().getNumber());
-        addressText.setText(data.getUser().getAddress());
+        nameText.setText(data.getClient().getName());
+        numberText.setText(data.getClient().getNumber());
+        addressText.setText(data.getClient().getAddress());
         loginText.setText(data.getUser().getLogin());
         passwordText.setText(data.getUser().getPassword());
         backBtn.setOnAction(event -> Utils.changeScene(event, "mainpage.fxml", "Главная страница"));
