@@ -70,7 +70,7 @@ public class SendPackagePageController {
                     try {
                         DBConnection.getInstance().startDelivery(data.getClient().getId(),
                                 toWho.getSelectionModel().getSelectedItem().split(" ")[0], fastCheckBox.isSelected() ? "1" : "0",
-                                weightField.getText().trim(), "В обработке");
+                                weightField.getText().trim(), "В обработке", toWho.getSelectionModel().getSelectedItem().split(" ")[3]);
                     }
                     catch (Exception e){
                         return;

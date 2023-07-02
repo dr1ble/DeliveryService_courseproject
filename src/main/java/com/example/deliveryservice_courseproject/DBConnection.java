@@ -189,7 +189,7 @@ public class DBConnection {
         ResultSet resultSet = null;
 //        String getClients = "SELECT " + DBConsts.CLIENTS_USERID + "," + DBConsts.CLIENTS_NAME + "," + DBConsts.CLIENTS_NUMBER + " FROM " + DBConsts.CLIENTS_TABLE
 //                + " WHERE" + DBConsts.USERS_ID + "<>" + "=?";
-        String getClients = "SELECT  user_id, name, number FROM clients WHERE user_id NOT IN (" + "?)";
+        String getClients = "SELECT  user_id, name, number, nearest_dc_id FROM clients WHERE user_id NOT IN (" + "?)";
 
         PreparedStatement psGetClients = getConnection().prepareStatement(getClients);
 
@@ -200,12 +200,13 @@ public class DBConnection {
     }
 
 
-    public void startDelivery(String senderId, String recieverId, String type, String weight, String status) throws SQLException {
+    public void startDelivery(String senderId, String recieverId, String type, String weight, String status, String nearestdc) throws SQLException {
         String insertPackages = "INSERT INTO " + DBConsts.PACKAGES_TABLE + "(" + DBConsts.PACKAGES_TYPEOFDELIVERY + "," + DBConsts.PACKAGES_WEIGHT + "," + DBConsts.PACKAGES_STATUS +
-                "," + DBConsts.PACKAGES_SENDERID + "," + DBConsts.PACKAGES_RECIPIENTID + ")" + "VALUES(?,?,?,?,?)" + ";";
+                "," + DBConsts.PACKAGES_SENDERID + "," + DBConsts.PACKAGES_RECIPIENTID + "," + DBConsts.PACKAGES_RECEIVINGCENTERID + ")" + "VALUES(?,?,?,?,?,?)" + ";";
         PreparedStatement preStatementInsertPackages = getConnection().prepareStatement(insertPackages);
         preStatementInsertPackages.setString(1, type); preStatementInsertPackages.setString(2, weight);
-        preStatementInsertPackages.setString(3, status); preStatementInsertPackages.setString(4, senderId); preStatementInsertPackages.setString(5, recieverId);
+        preStatementInsertPackages.setString(3, status); preStatementInsertPackages.setString(4, senderId);
+        preStatementInsertPackages.setString(5, recieverId); preStatementInsertPackages.setString(6, nearestdc);
         preStatementInsertPackages.executeUpdate();
 
     }
@@ -252,6 +253,29 @@ public class DBConnection {
         return list;
     }
 
+    public ObservableList<DeliveryCenter> getdepartDC(String curdcId) throws SQLException {
+        ObservableList<DeliveryCenter> list = FXCollections.observableArrayList();
+        PreparedStatement ps = getConnection().prepareStatement("select * from delivery_centers WHERE id NOT IN(" + "?)");
+        ps.setString(1, curdcId);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            list.add(new DeliveryCenter(rs.getString("id"), rs.getString("name"), rs.getString("address")));
+        }
+        return list;
+    }
+
+    public ObservableList<Courier> getDataCourierForCurDC(String curdcId) throws SQLException {
+        ObservableList<Courier> list = FXCollections.observableArrayList();
+        PreparedStatement ps = getConnection().prepareStatement("select * from couriers WHERE delivery_center_id"+ "=?");
+        ps.setString(1, curdcId);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            list.add(new Courier(rs.getString("id"), rs.getString("name"), rs.getString("number"), curdcId, rs.getString("user_id")));
+        }
+        return list;
+    }
+
+
     public int getAccessLevel(String login) throws SQLException {
         ResultSet resultSet = null;
 
@@ -267,18 +291,33 @@ public class DBConnection {
         return Integer.parseInt(accesslevel);
     }
 
-    public void acceptPackage(String id, String status, String reciveCenterId, String sendCenterId, String dateSend, String courier_id) throws SQLException {
-        String updatePackage = "UPDATE " + DBConsts.PACKAGES_TABLE + " SET " +  DBConsts.PACKAGES_STATUS +  "=?" + "," +  DBConsts.PACKAGES_RECEIVINGCENTERID + "=?"
-                + "," + DBConsts.PACKAGES_SENDCENTERID + "=?" + "," + DBConsts.PACKAGES_DATESTART + "=?" + "," +  DBConsts.PACKAGES_COURIERID + "=?"  + " WHERE " + DBConsts.PACKAGES_ID + "=?";
+//    public void acceptPackage(String id, String status, String reciveCenterId, String sendCenterId, String dateSend, String courier_id) throws SQLException {
+////        String updatePackage = "UPDATE " + DBConsts.PACKAGES_TABLE + " SET " + DBConsts.PACKAGES_STATUS +  "=?" + "," +  DBConsts.PACKAGES_RECEIVINGCENTERID + "=?"
+////                + "," + DBConsts.PACKAGES_SENDCENTERID + "=?" + "," + DBConsts.PACKAGES_DATESTART + "=?" + "," +  DBConsts.PACKAGES_COURIERID + "=?"  + " WHERE " + DBConsts.PACKAGES_ID + "=?";
+//        String updatePackage = "UPDATE packages  SET status =?, receivingcenter_id =?, departcenter_id =?, date_start =?, courier_id =? WHERE id =?";
+//        PreparedStatement psUpdatePackage = getConnection().prepareStatement(updatePackage);
+//
+//        psUpdatePackage.setString(1, status);
+//        psUpdatePackage.setString(2, reciveCenterId);
+//        psUpdatePackage.setString(3, sendCenterId);
+//        psUpdatePackage.setString(4, dateSend);
+//        psUpdatePackage.setString(5, courier_id);
+//        psUpdatePackage.setString(6, id);
+//
+//        psUpdatePackage.executeUpdate();
+//    }
 
+    public void acceptPackage(String id, String status, String sendCenterId, String dateSend, String courier_id) throws SQLException {
+//        String updatePackage = "UPDATE " + DBConsts.PACKAGES_TABLE + " SET " + DBConsts.PACKAGES_STATUS +  "=?" + "," +  DBConsts.PACKAGES_RECEIVINGCENTERID + "=?"
+//                + "," + DBConsts.PACKAGES_SENDCENTERID + "=?" + "," + DBConsts.PACKAGES_DATESTART + "=?" + "," +  DBConsts.PACKAGES_COURIERID + "=?"  + " WHERE " + DBConsts.PACKAGES_ID + "=?";
+        String updatePackage = "UPDATE packages  SET status =?, departcenter_id =?, date_start =?, courier_id =? WHERE id =?";
         PreparedStatement psUpdatePackage = getConnection().prepareStatement(updatePackage);
 
         psUpdatePackage.setString(1, status);
-        psUpdatePackage.setString(2, reciveCenterId);
-        psUpdatePackage.setString(3, sendCenterId);
-        psUpdatePackage.setString(4, dateSend);
-        psUpdatePackage.setString(5, courier_id);
-        psUpdatePackage.setString(6, id);
+        psUpdatePackage.setString(2, sendCenterId);
+        psUpdatePackage.setString(3, dateSend);
+        psUpdatePackage.setString(4, courier_id);
+        psUpdatePackage.setString(5, id);
 
         psUpdatePackage.executeUpdate();
     }

@@ -2,19 +2,21 @@ package com.example.deliveryservice_courseproject.Controllers;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.example.deliveryservice_courseproject.DBConnection;
+import com.example.deliveryservice_courseproject.*;
 import com.example.deliveryservice_courseproject.Package;
-import com.example.deliveryservice_courseproject.Utils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import Utils.AlertMessage;
 import org.w3c.dom.events.MouseEvent;
 
 public class AcceptPackageController {
+
 
     @FXML
     private ResourceBundle resources;
@@ -66,20 +68,14 @@ public class AcceptPackageController {
     private Button injectBtn1;
 
     @FXML
-    private TextField IdcourierField;
-
-    @FXML
     private TextField receivingcenterField;
-
-    @FXML
-    private TextField senddateField;
-
     @FXML
     private DatePicker senddateDatePicker;
 
-
     @FXML
-    private TextField sendingcenterField;
+    private ChoiceBox<String> IdcourierChoice;
+    @FXML
+    private ChoiceBox<String> sendingcenterChoice;
 
     @FXML
     private TextField statusField;
@@ -87,23 +83,56 @@ public class AcceptPackageController {
     @FXML
     private Text packageIDTEXT;
 
+    private String curDc;
+
+    DBConnection db;
+
+    {
+        try {
+            db = DBConnection.getInstance();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @FXML
     void getPackageOnClick (){
         acceptPackage.setOnMouseClicked(mouseEvent -> {
-            Package pckge = acceptPackage.getSelectionModel().getSelectedItem();
-            packageIDTEXT.setText(pckge.getId());
-            statusField.setText(pckge.getStatus());
-            receivingcenterField.setText(pckge.getReceivingcenter_id());
-            sendingcenterField.setText(pckge.getDepartcenter_id());
+            if(!acceptPackage.getSelectionModel().isEmpty()) {
+                Package pckge = acceptPackage.getSelectionModel().getSelectedItem();
+                packageIDTEXT.setText("ID: " + pckge.getId());
+                statusField.setText(pckge.getStatus());
+                statusField.setText(statusField.getText().replace("В обработке", "Принята"));
+                receivingcenterField.setText(pckge.getReceivingcenter_id());
+                curDc = pckge.getReceivingcenter_id();
+                try {
+                    sendingcenterChoice.getItems().clear();
+                    IdcourierChoice.getItems().clear();
+                    for (int i = 0; i < db.getDataCourierForCurDC(curDc).size(); i++) {
+                        String courier_name = db.getDataCourierForCurDC(curDc).get(i).getName();
+                        String courier_id = db.getDataCourierForCurDC(curDc).get(i).getId();
+                        IdcourierChoice.getItems().addAll(courier_name + " " + courier_id);
+                    }
+                    for (int i = 0; i < db.getdepartDC(curDc).size(); i++) {
+                        String dc_address = db.getdepartDC(curDc).get(i).getAddress();
+                        String dc_id = db.getdepartDC(curDc).get(i).getId();
+                        sendingcenterChoice.getItems().addAll(dc_id + " " + dc_address);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
 //            senddateField.setText(pckge.getDate_start());
-            IdcourierField.setText(pckge.getCourier_id());
+//            IdcourierField.setText(pckge.getCourier_id());
+            }
 
         });
     }
 
+
     @FXML
     void initialize() throws SQLException {
         getPackageOnClick();
+
         packageidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         typedeliveryColumn.setCellValueFactory(new PropertyValueFactory<>("type_of_delivery"));
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
@@ -117,24 +146,40 @@ public class AcceptPackageController {
         recievecenterColumn.setCellValueFactory(new PropertyValueFactory<>("receivingcenter_id"));
 
         listPackages = DBConnection.getInstance().getDataPackages();
-        System.out.println(listPackages.toString());
         acceptPackage.setItems(listPackages);
+
 
 
 
         injectBtn1.setOnAction(event ->
         {
             try {
-                if(!packageIDTEXT.getText().isEmpty() && !statusField.getText().isEmpty() && !receivingcenterField.getText().isEmpty()
-                        && !sendingcenterField.getText().isEmpty() && !String.valueOf(senddateDatePicker.getValue()).isEmpty() && !IdcourierField.getText().isEmpty()) {
-                    DBConnection.getInstance().acceptPackage(packageIDTEXT.getText().trim(), statusField.getText().trim(),
-                            receivingcenterField.getText().trim(), sendingcenterField.getText().trim(), String.valueOf(senddateDatePicker.getValue()), IdcourierField.getText());
+                AlertMessage am = new AlertMessage();
+                if(!packageIDTEXT.getText().isEmpty() && !statusField.getText().isEmpty() && receivingcenterField.getText() != null && sendingcenterChoice.getValue() != null && senddateDatePicker.getValue() != null && IdcourierChoice.getValue() != null) {
+                    am.confirmationMessage("Вы подтверждаете отправку?");
+                    if(am.checkconfirm()) {
+                        db.acceptPackage(packageIDTEXT.getText().split(" ")[1], statusField.getText().trim(), sendingcenterChoice.getValue().split(" ")[0], String.valueOf(senddateDatePicker.getValue()), IdcourierChoice.getValue().split(" ")[1]);
+                        am.informationMessage("Отправка подтверждена!");
+                        initialize();
+                        packageIDTEXT.setText("");
+                        statusField.clear();
+                    }
+                    else{
+                        am.warningMessage("Отправка не подтверждена");
+                    }
                 }
-                else System.out.println("Не все поля заполнены. Невозможно подтвердить поссылку!");
+                else{
+                    am.warningMessage("Не все поля заполнены. Невозможно подтвердить поссылку!");
+                    System.out.println("Не все поля заполнены. Невозможно подтвердить поссылку!");
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
+
+
+
+
         backBtn.setOnAction(event -> Utils.changeScene(event,"managermain.fxml", "Главная страница (Менеджер)"));
     }
 

@@ -14,7 +14,7 @@ public class SendPackagePageModel {
         List<String> clients = new ArrayList<>();
 
         while (resultSet.next()){
-            clients.add(resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3));
+            clients.add(resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3) + " " + resultSet.getString(4));
         }
         return clients;
     }
