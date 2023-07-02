@@ -253,11 +253,24 @@ public class DBConnection {
         return list;
     }
 
-    public ObservableList<Package> getDataPackages() throws SQLException {
+    public ObservableList<Package> getUnacceptedDataPackages() throws SQLException {
         ObservableList<Package> list = FXCollections.observableArrayList();
         String status = "В обработке";
         PreparedStatement ps = getConnection().prepareStatement("select * from packages WHERE packages.status"+ "=?");
         ps.setString(1, status);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            list.add(new Package(rs.getString("id"),rs.getString("type_of_delivery"),
+                    rs.getString("weight"), rs.getString("status"), rs.getString("date_start"),
+                    rs.getString("date_end"), rs.getString("courier_id"), rs.getString("sender_id"),
+                    rs.getString("recipient_id"), rs.getString("departcenter_id"), rs.getString("receivingcenter_id")));
+        }
+        return list;
+    }
+
+    public ObservableList<Package> getDataPackages() throws SQLException {
+        ObservableList<Package> list = FXCollections.observableArrayList();
+        PreparedStatement ps = getConnection().prepareStatement("select * from packages");
         ResultSet rs = ps.executeQuery();
         while (rs.next()){
             list.add(new Package(rs.getString("id"),rs.getString("type_of_delivery"),

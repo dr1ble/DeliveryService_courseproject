@@ -2,7 +2,6 @@ package com.example.deliveryservice_courseproject.Controllers;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.example.deliveryservice_courseproject.*;
@@ -13,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import Utils.AlertMessage;
-import org.w3c.dom.events.MouseEvent;
 
 public class AcceptPackageController {
 
@@ -145,7 +143,7 @@ public class AcceptPackageController {
         departcenterColumn.setCellValueFactory(new PropertyValueFactory<>("departcenter_id"));
         recievecenterColumn.setCellValueFactory(new PropertyValueFactory<>("receivingcenter_id"));
 
-        listPackages = DBConnection.getInstance().getDataPackages();
+        listPackages = db.getUnacceptedDataPackages();
         acceptPackage.setItems(listPackages);
 
 

@@ -2,8 +2,6 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -13,15 +11,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #345830;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.deliveryservice_courseproject.Controllers.AcceptPackageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #345830;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.deliveryservice_courseproject.Controllers.AllPackagesController">
     <children>
         <TabPane layoutY="14.0" prefHeight="586.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab text="Посылки к принятию">
+                <Tab text="Все отправления">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="800.0">
                             <children>
-                                <TableView fx:id="acceptPackage" layoutY="-2.0" prefHeight="476.0" prefWidth="800.0">
+                                <TableView fx:id="allPackage" layoutY="-2.0" prefHeight="476.0" prefWidth="800.0">
                                     <columns>
                                         <TableColumn fx:id="packageidColumn" prefWidth="45.0" text="ID" />
                                         <TableColumn fx:id="typedeliveryColumn" prefWidth="83.0" text="Тип доставки" />
@@ -36,55 +34,125 @@
                                         <TableColumn fx:id="recievecenterColumn" prefWidth="68.0" text="ID ЦП" />
                                     </columns>
                                 </TableView>
-                                <AnchorPane layoutY="470.0" prefHeight="87.0" prefWidth="706.0">
+                                <AnchorPane layoutY="470.0" prefHeight="87.0" prefWidth="800.0">
                                     <children>
-                                        <TextField fx:id="statusField" editable="false" layoutX="66.0" layoutY="15.0" prefHeight="25.0" prefWidth="105.0" promptText="Статус" />
-                                        <TextField fx:id="receivingcenterField" editable="false" layoutX="187.0" layoutY="14.0" prefHeight="25.0" prefWidth="118.0" promptText="ID Центр получения" />
-                                        <Text fx:id="packageIDTEXT" fill="WHITE" layoutX="8.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" wrappingWidth="50.6796875">
-                                            <font>
-                                                <Font name="Calibri Bold" size="17.0" />
-                                            </font>
-                                        </Text>
-                                        <DatePicker fx:id="senddateDatePicker" layoutX="454.0" layoutY="14.0" prefHeight="25.0" prefWidth="120.0" promptText="Дата отправки" />
-                                        <ChoiceBox fx:id="IdcourierChoice" accessibleText="ID курьера" layoutX="587.0" layoutY="15.0" prefHeight="25.0" prefWidth="115.0" />
-                                        <Text fx:id="packageIDTEXT1" fill="WHITE" layoutX="102.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Статус" wrappingWidth="50.6796875">
-                                            <font>
-                                                <Font name="Calibri Bold" size="14.0" />
-                                            </font>
-                                        </Text>
-                                        <Text fx:id="packageIDTEXT11" fill="WHITE" layoutX="221.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID ЦП" wrappingWidth="50.6796875">
-                                            <font>
-                                                <Font name="Calibri Bold" size="14.0" />
-                                            </font>
-                                        </Text>
-                                        <Text fx:id="packageIDTEXT111" fill="WHITE" layoutX="360.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID ЦО" wrappingWidth="50.6796875">
-                                            <font>
-                                                <Font name="Calibri Bold" size="14.0" />
-                                            </font>
-                                        </Text>
-                                        <Button fx:id="backBtn" layoutX="2.0" layoutY="50.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="63.0" text="Назад">
+                                        <Button fx:id="backBtn" layoutX="722.0" layoutY="52.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="64.0" text="Назад">
                                             <font>
                                                 <Font name="Calibri" size="14.0" />
                                             </font>
                                         </Button>
-                                        <Text fx:id="packageIDTEXT1111" fill="WHITE" layoutX="460.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата отправки" wrappingWidth="107.6796875">
-                                            <font>
-                                                <Font name="Calibri Bold" size="14.0" />
-                                            </font>
-                                        </Text>
-                                        <Text fx:id="packageIDTEXT11111" fill="WHITE" layoutX="625.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Курьер" wrappingWidth="55.6796875">
-                                            <font>
-                                                <Font name="Calibri Bold" size="14.0" />
-                                            </font>
-                                        </Text>
-                                        <ChoiceBox fx:id="sendingcenterChoice" accessibleText="ID курьера" layoutX="320.0" layoutY="15.0" prefHeight="25.0" prefWidth="115.0" />
+                              <TextField fx:id="packageId" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="59.0" promptText="ID Отправления">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="typedelivery" alignment="CENTER" layoutX="83.0" layoutY="14.0" prefHeight="25.0" prefWidth="47.0" promptText="Тип доставки">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="weight" layoutX="143.0" layoutY="14.0" prefHeight="25.0" prefWidth="68.0" promptText="Вес">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="status" layoutX="220.0" layoutY="14.0" prefHeight="25.0" prefWidth="66.0" promptText="Статус">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="startdate" layoutX="296.0" layoutY="14.0" prefHeight="25.0" prefWidth="73.0" promptText="Дата отправки">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="enddate" layoutX="377.0" layoutY="14.0" prefHeight="25.0" prefWidth="73.0" promptText="Дата получения">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="courierid" layoutX="458.0" layoutY="14.0" prefHeight="25.0" prefWidth="40.0" promptText="ID курьера">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="senderid" layoutX="507.0" layoutY="14.0" prefHeight="25.0" prefWidth="36.0" promptText="ID отправителя">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="recepientid" layoutX="557.0" layoutY="14.0" prefHeight="25.0" prefWidth="32.0" promptText="ID получателя">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="departcenter" layoutX="602.0" layoutY="14.0" prefHeight="25.0" prefWidth="37.0" promptText="ID ЦО">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <TextField fx:id="receivecenter" layoutX="653.0" layoutY="14.0" prefHeight="25.0" prefWidth="36.0" promptText="ID ЦП">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                              </TextField>
+                              <Text fx:id="packageIDTEXT1" fill="WHITE" layoutX="228.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Статус" textAlignment="CENTER" wrappingWidth="50.6796875">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="packageIDTEXT11" fill="WHITE" layoutX="595.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЦО" textAlignment="CENTER" wrappingWidth="50.6796875">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="packageIDTEXT111" fill="WHITE" layoutX="646.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ЦП" textAlignment="CENTER" wrappingWidth="50.6796875">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="packageIDTEXT112" fill="WHITE" layoutX="545.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Получатель" textAlignment="CENTER" wrappingWidth="55.6796875">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="packageIDTEXT1121" fill="WHITE" layoutX="506.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Отправитель" textAlignment="CENTER" wrappingWidth="38.2078125">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="packageIDTEXT11211" fill="WHITE" layoutX="458.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Курьер" wrappingWidth="41.6796875">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="packageIDTEXT112111" fill="WHITE" layoutX="387.0" layoutY="48.0" strokeMiterLimit="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата получения" textAlignment="CENTER" wrappingWidth="53.15640943877551">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="packageIDTEXT1121111" fill="WHITE" layoutX="306.0" layoutY="48.0" strokeMiterLimit="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дата отправки" textAlignment="CENTER" wrappingWidth="52.01116071428572">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="packageIDTEXT12" fill="WHITE" layoutX="152.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вес" textAlignment="CENTER" wrappingWidth="50.6796875">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="packageIDTEXT121" fill="WHITE" layoutX="81.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Тип доставки" textAlignment="CENTER" wrappingWidth="50.6796875">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="packageIDTEXT1211" fill="WHITE" layoutX="18.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номер посылки" textAlignment="CENTER" wrappingWidth="50.6796875">
+                                 <font>
+                                    <Font name="Calibri Bold" size="10.0" />
+                                 </font>
+                              </Text>
                                     </children>
                                 </AnchorPane>
-                                <Button fx:id="injectBtn1" layoutX="706.0" layoutY="481.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="88.0" text="Заполнить" textFill="#0c5725">
-                                    <font>
-                                        <Font name="Calibri" size="14.0" />
-                                    </font>
-                                </Button>
                             </children>
                         </AnchorPane>
                     </content>

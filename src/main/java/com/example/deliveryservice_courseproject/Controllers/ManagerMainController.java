@@ -60,8 +60,14 @@ public class ManagerMainController {
             }
         });
 
+        allPackagesBtn.setOnAction(event -> Utils.changeScene(event, "allpackages.fxml","Все отправления"));
+
+
         acceptPackageBtn.setOnAction(event ->
                 Utils.changeScene(event,"acceptpackage.fxml", "Подтверждение посылки"));
+
+        deliverycentersBtn.setOnAction(event ->
+                Utils.changeScene(event,"alldeliverycenters.fxml", "Центры доставки"));
     }
 
 }
