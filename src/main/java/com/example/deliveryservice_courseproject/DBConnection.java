@@ -38,11 +38,13 @@ public class DBConnection {
     }
 
     public void signUpUser(User user) throws SQLException {
-        String insertUsers = "INSERT INTO " + DBConsts.USERS_TABLE + "(" + DBConsts.USERS_LOGIN + "," + DBConsts.USERS_PASSWORD + ")" + "VALUES(?,?)" + ";";
+        String insertUsers = "INSERT INTO " + DBConsts.USERS_TABLE + "(" + DBConsts.USERS_LOGIN + "," + DBConsts.USERS_PASSWORD + ", " + DBConsts.USERS_ACCESS + ")"
+                + "VALUES(?,?,?)" + ";";
         PreparedStatement preStatementUsers = getConnection().prepareStatement(insertUsers);
 
         preStatementUsers.setString(1, user.getLogin());
         preStatementUsers.setString(2, HashCoder.toHash(user.getPassword()));
+        preStatementUsers.setString(3, user.getAccesslevel());
 
         preStatementUsers.executeUpdate();
     }
@@ -96,16 +98,14 @@ public class DBConnection {
     }
     public User getUserData(String login, String password) throws SQLException{
         ResultSet resultSet = null;
-        String selectUserdata = "SELECT " + DBConsts.CLIENTS_NAME + ", " + DBConsts.CLIENTS_NUMBER + ", " + DBConsts.CLIENTS_ADDRESS + " FROM " + DBConsts.CLIENTS_TABLE +
-                " JOIN " + DBConsts.USERS_TABLE + " ON " + DBConsts.CLIENTS_TABLE + "." + DBConsts.CLIENTS_USERID + "=" + DBConsts.USERS_TABLE + "." + DBConsts.USERS_ID +
-                " WHERE " + DBConsts.USERS_TABLE + "." + DBConsts.USERS_LOGIN  + "=?";
+        String selectUserdata = "SELECT * FROM " + DBConsts.USERS_TABLE + " WHERE " + DBConsts.USERS_LOGIN  + " =?";
         PreparedStatement preparedStatement = getConnection().prepareStatement(selectUserdata);
         preparedStatement.setString(1, login);
         resultSet = preparedStatement.executeQuery();
         User user = null;
 
         if (resultSet.next()) {
-            user = new User(login, HashCoder.toHash(password));
+            user = new User(resultSet.getString("id"), login,  HashCoder.toHash(password), resultSet.getString("accesslevel"));
         }
         return user;
     }
@@ -235,5 +235,51 @@ public class DBConnection {
                     rs.getString("recipient_id"), rs.getString("departcenter_id"), rs.getString("receivingcenter_id")));
         }
         return list;
+    }
+
+    public ObservableList<Package> getDataPackages() throws SQLException {
+        ObservableList<Package> list = FXCollections.observableArrayList();
+        String status = "В обработке";
+        PreparedStatement ps = getConnection().prepareStatement("select * from packages WHERE packages.status"+ "=?");
+        ps.setString(1, status);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            list.add(new Package(rs.getString("id"),rs.getString("type_of_delivery"),
+                    rs.getString("weight"), rs.getString("status"), rs.getString("date_start"),
+                    rs.getString("date_end"), rs.getString("courier_id"), rs.getString("sender_id"),
+                    rs.getString("recipient_id"), rs.getString("departcenter_id"), rs.getString("receivingcenter_id")));
+        }
+        return list;
+    }
+
+    public int getAccessLevel(String login) throws SQLException {
+        ResultSet resultSet = null;
+
+        String getAccessLevel =  "SELECT accesslevel FROM users WHERE login " + "=?";
+        PreparedStatement psGetAccess = getConnection().prepareStatement(getAccessLevel);
+        psGetAccess.setString(1, login);
+        resultSet = psGetAccess.executeQuery();
+
+        String accesslevel  = "";
+        if (resultSet.next()) {
+            accesslevel = resultSet.getString("accesslevel");
+        }
+        return Integer.parseInt(accesslevel);
+    }
+
+    public void acceptPackage(String id, String status, String reciveCenterId, String sendCenterId, String dateSend, String courier_id) throws SQLException {
+        String updatePackage = "UPDATE " + DBConsts.PACKAGES_TABLE + " SET " +  DBConsts.PACKAGES_STATUS +  "=?" + "," +  DBConsts.PACKAGES_RECEIVINGCENTERID + "=?"
+                + "," + DBConsts.PACKAGES_SENDCENTERID + "=?" + "," + DBConsts.PACKAGES_DATESTART + "=?" + "," +  DBConsts.PACKAGES_COURIERID + "=?"  + " WHERE " + DBConsts.PACKAGES_ID + "=?";
+
+        PreparedStatement psUpdatePackage = getConnection().prepareStatement(updatePackage);
+
+        psUpdatePackage.setString(1, status);
+        psUpdatePackage.setString(2, reciveCenterId);
+        psUpdatePackage.setString(3, sendCenterId);
+        psUpdatePackage.setString(4, dateSend);
+        psUpdatePackage.setString(5, courier_id);
+        psUpdatePackage.setString(6, id);
+
+        psUpdatePackage.executeUpdate();
     }
 }

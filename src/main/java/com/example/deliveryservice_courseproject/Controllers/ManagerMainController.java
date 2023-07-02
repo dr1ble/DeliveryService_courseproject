@@ -3,19 +3,17 @@ package com.example.deliveryservice_courseproject.Controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import Models.MainPageModel;
-import Utils.AlertMessage;
 import Models.Data;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import Utils.AlertMessage;
+import org.w3c.dom.events.MouseEvent;
 
-public class MainPageController {
+public class ManagerMainController {
+
     Data data = Data.getInstance();
-    MainPageModel mainPageModel = new MainPageModel();
 
     @FXML
     private ResourceBundle resources;
@@ -27,11 +25,11 @@ public class MainPageController {
     private Button exitBtn;
 
     @FXML
-    private Button lkBtn;
+    private Button myPackagesBtn;
+
 
     @FXML
-    private ImageView lkImage;
-
+    private Button acceptPackageBtn;
     @FXML
     private Text namefield;
 
@@ -39,18 +37,8 @@ public class MainPageController {
     private Button sendPackageBtn;
 
     @FXML
-    private Button myPackagesBtn;
-
-
-    @FXML
     void initialize() {
-//        mainPageModel.getUser().getName()
-        namefield.setText("Здравствуйте, " + data.getClient().getName() + " !"); // !!!!!!!!!!!!
-        lkBtn.setOnAction(event -> Utils.changeScene(event, "personalcabinet.fxml", "Личный кабинет"));
-        sendPackageBtn.setOnAction(event -> Utils.changeScene(event,"sendpackagepage.fxml", "Отправить посылку"));
-        myPackagesBtn.setOnAction(event -> Utils.changeScene(event, "mypackagespage.fxml", "Отправления"));
-
-
+        namefield.setText("Здравствуйте, " + data.getUser().getLogin() + "!");
 
 
         exitBtn.setOnAction(event -> {
@@ -64,6 +52,9 @@ public class MainPageController {
                 ;
             }
         });
+
+        acceptPackageBtn.setOnAction(event ->
+                Utils.changeScene(event,"acceptpackage.fxml", "Посылки"));
     }
 
 }

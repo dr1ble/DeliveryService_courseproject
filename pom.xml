@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.deliveryservice_courseproject/com.example.deliveryservice_courseproject.LoginPage
+                                com.example.deliveryservice_courseproject/com.example.deliveryservice_courseproject.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

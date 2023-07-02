@@ -1,12 +1,13 @@
 package com.example.deliveryservice_courseproject;
 
 public class User {
-    private int id;
-    private String login, password;
+    private String login, password, id, accesslevel;
 
-    public User(String login, String password) {
+    public User(String id, String login, String password, String accesslevel) {
+        this.id = id;
         this.login = login;
         this.password = password;
+        this.accesslevel = accesslevel;
     }
 
 
@@ -26,11 +27,19 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getAccesslevel() {
+        return accesslevel;
+    }
+
+    public void setAccesslevel(String accesslevel) {
+        this.accesslevel = accesslevel;
     }
 }

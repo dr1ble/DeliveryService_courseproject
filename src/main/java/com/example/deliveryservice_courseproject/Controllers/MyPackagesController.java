@@ -13,7 +13,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
+import org.w3c.dom.events.MouseEvent;
 
 public class MyPackagesController {
     Data data = Data.getInstance();
@@ -69,8 +72,6 @@ public class MyPackagesController {
     private TableColumn<Package,String> recipientIdColumn;
 
     ObservableList<Package> listPackages;
-
-
     @FXML
     void initialize() throws SQLException {
         System.out.println();

@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import Models.LoginPageModel;
 import Utils.AlertMessage;
 import Models.Data;
+import com.example.deliveryservice_courseproject.DBConnection;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -46,12 +47,21 @@ public class LoginPageController {
             String password = passField.getText().trim();
             if(!login.equals("") && !password.equals("")){
                 try {
-                    if(loginPageModel.loginUser(login,password)) {
-                        data.setUser(loginPageModel.getUser());
-                        data.setClient(loginPageModel.getClient());
-                        Utils.changeScene(event, "mainpage.fxml", "Главная страница");
+                    if(loginPageModel.login(login, password)) {
+                        if (DBConnection.getInstance().getAccessLevel(login) == 0) {
+                            if (loginPageModel.loginClient(login, password)) {
+                                data.setUser(loginPageModel.getUser());
+                                data.setClient(loginPageModel.getClient());
+                                Utils.changeScene(event, "mainpage.fxml", "Главная страница");
+                            }
+                        } else if (DBConnection.getInstance().getAccessLevel(login) == 2) {
+                            if (loginPageModel.loginManager(login, password)) {
+                                data.setUser(loginPageModel.getUser());
+                                Utils.changeScene(event, "managermain.fxml", "Главная страница (Менеджер)");
+                            }
+                        }
                     }
-                    else{
+                    else {
                         alertMessage.errorMessage("Такого пользователя не существует!");
                         System.out.println("Такого пользователя не существует!");
                         passField.setStyle("-fx-text-box-border: #ff0000; -fx-focus-color: #ff0000;");

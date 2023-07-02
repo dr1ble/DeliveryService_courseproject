@@ -67,10 +67,14 @@ public class SendPackagePageController {
                 AlertMessage alertMessage = new AlertMessage();
                 if(!toWho.getSelectionModel().isEmpty() && (!fastCheckBox.isSelected() || !usualCheckBox.isSelected())
                 && !weightField.getText().isEmpty()) {
-                    DBConnection.getInstance().startDelivery(DBConnection.getInstance().getID(data.getUser().getLogin()),
-                            toWho.getSelectionModel().getSelectedItem().split(" ")[0], fastCheckBox.isSelected() ? "1" : "0",
-                            weightField.getText().trim(),
-                            "В обработке");
+                    try {
+                        DBConnection.getInstance().startDelivery(data.getClient().getId(),
+                                toWho.getSelectionModel().getSelectedItem().split(" ")[0], fastCheckBox.isSelected() ? "1" : "0",
+                                weightField.getText().trim(), "В обработке");
+                    }
+                    catch (Exception e){
+                        return;
+                    }
                     packageIDtext.setText("Ваш ID-посылки: " + DBConnection.getInstance().getPackageId());
                     alertMessage.informationMessage("Отправление передано в обработку! Запишите полученнный ID на коробке и отнесите ее в ближайший Центр Доставки");
                 }

@@ -16,6 +16,8 @@ public class DBConsts {
     public static final String USERS_ID = "id";
     public static final String USERS_PASSWORD = "password";
 
+    public static final String USERS_ACCESS = "accesslevel";
+
     //////////////////////////////////////////////////////
 
     public static final String PACKAGES_TABLE = "packages";
@@ -28,8 +30,8 @@ public class DBConsts {
     public static final String PACKAGES_COURIERID = "courier_id";
     public static final String PACKAGES_SENDERID = "sender_id";
     public static final String PACKAGES_RECIPIENTID = "recipient_id";
-    public static final String PACKAGES_DEPARTCENTERID = "recipient_id";
-    public static final String PACKAGES_RECEIVINGCENTERID = "recipient_id";
+    public static final String PACKAGES_SENDCENTERID = "departcenter_id";
+    public static final String PACKAGES_RECEIVINGCENTERID = "receivingcenter_id";
 
     //////////////////////////////////////////////////////
 
