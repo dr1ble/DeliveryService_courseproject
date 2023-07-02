@@ -59,7 +59,14 @@ public class LoginPageController {
                                 data.setUser(loginPageModel.getUser());
                                 Utils.changeScene(event, "managermain.fxml", "Главная страница (Менеджер)");
                             }
+                        } else if (DBConnection.getInstance().getAccessLevel(login) == 1) {
+                            if (loginPageModel.loginCourier(login, password)) {
+                                data.setUser(loginPageModel.getUser());
+                                data.setCourier(loginPageModel.getCourier());
+                                Utils.changeScene(event, "couriermain.fxml", "Главная страница (Курьер)");
+                            }
                         }
+
                     }
                     else {
                         alertMessage.errorMessage("Такого пользователя не существует!");

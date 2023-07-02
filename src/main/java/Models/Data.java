@@ -1,6 +1,7 @@
 package Models;
 
 import com.example.deliveryservice_courseproject.Client;
+import com.example.deliveryservice_courseproject.Courier;
 import com.example.deliveryservice_courseproject.User;
 
 public class Data {
@@ -8,6 +9,7 @@ public class Data {
 
     private User user;
     private Client client;
+    private Courier courier;
 
     public static Data getInstance(){
         return instance;
@@ -27,5 +29,13 @@ public class Data {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Courier getCourier() {
+        return courier;
+    }
+
+    public void setCourier(Courier courier) {
+        this.courier = courier;
     }
 }

@@ -4,14 +4,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import Models.Data;
+import Utils.AlertMessage;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import Utils.AlertMessage;
-import org.w3c.dom.events.MouseEvent;
 
-public class ManagerMainController {
+public class CourierMainController {
 
     Data data = Data.getInstance();
 
@@ -22,31 +21,20 @@ public class ManagerMainController {
     private URL location;
 
     @FXML
-    private Button exitBtn;
-    @FXML
     private Button acceptPackageBtn;
-    @FXML
-    private Text namefield;
 
     @FXML
     private Button allPackagesBtn;
 
     @FXML
-    private Button deliverycentersBtn;
+    private Button exitBtn;
 
     @FXML
-    private Button regcourierBtn;
-
-
-    @FXML
-    private Button sendPackageBtn;
+    private Text namefield;
 
     @FXML
     void initialize() {
-        namefield.setText("Здравствуйте, " + data.getUser().getLogin() + "!");
-
-        regcourierBtn.setOnAction(event -> Utils.changeScene(event, "regcourier.fxml","Регистрация курьера"));
-
+        namefield.setText("Здравствуйте, " + data.getCourier().getName() + "!");
 
         exitBtn.setOnAction(event -> {
             AlertMessage alertMessage = new AlertMessage();
@@ -60,8 +48,6 @@ public class ManagerMainController {
             }
         });
 
-        acceptPackageBtn.setOnAction(event ->
-                Utils.changeScene(event,"acceptpackage.fxml", "Подтверждение посылки"));
     }
 
 }

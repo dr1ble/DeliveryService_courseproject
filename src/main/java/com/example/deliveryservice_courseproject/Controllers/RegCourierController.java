@@ -5,16 +5,14 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import Utils.AlertMessage;
-import com.example.deliveryservice_courseproject.Client;
-import com.example.deliveryservice_courseproject.DBConnection;
-import com.example.deliveryservice_courseproject.User;
-import com.example.deliveryservice_courseproject.Utils;
+import com.example.deliveryservice_courseproject.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class RegPageController {
+public class RegCourierController {
 
     @FXML
     private ResourceBundle resources;
@@ -23,13 +21,13 @@ public class RegPageController {
     private URL location;
 
     @FXML
-    private TextField addressField;
-
-    @FXML
     private Button cancelBtn;
 
     @FXML
-    private TextField loginField;
+    private ChoiceBox<String> deliverycenterChoice;
+
+    @FXML
+    private TextField logincourField;
 
     @FXML
     private TextField nameField;
@@ -44,19 +42,36 @@ public class RegPageController {
     private Button regBtn;
 
 
+    DBConnection db;
+    {
+        try {
+            db = DBConnection.getInstance();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     @FXML
     void initialize() throws SQLException {
+
+        for (int i = 0; i < db.getDCdata().size(); i++) {
+            deliverycenterChoice.getItems().addAll(db.getDCdata().get(i).getId() + " " + db.getDCdata().get(i).getAddress() + " " + db.getDCdata().get(i).getName());
+        }
+
+
 
         regBtn.setOnAction(event -> {
             AlertMessage alertMessage = new AlertMessage();
             try {
-                if (!nameField.getText().isEmpty() && !numberField.getText().isEmpty() && !addressField.getText().isEmpty()
-                        && !loginField.getText().isEmpty() && !passField.getText().isEmpty()) {
-                    if (!DBConnection.getInstance().checkLogin(loginField.getText())) {
+                if (!nameField.getText().isEmpty() && !numberField.getText().isEmpty() && deliverycenterChoice.getValue() != null
+                        && !logincourField.getText().isEmpty() && !passField.getText().isEmpty()) {
+                    System.out.println(logincourField.getText());
+                    if (!db.checkLogin(logincourField.getText())) {
                         signUp();
-                        System.out.println("Успешная регистрация!");
-                        alertMessage.informationMessage("Регистрация прошла успешно");
-                        Utils.changeScene(event, "loginpage.fxml", "DeliveryService");
+                        System.out.println("Успешная регистрация курьера!");
+                        alertMessage.informationMessage("Успешная регистрация курьера!");
+                        Utils.changeScene(event, "managermain.fxml", "Главная страница (Менеджер)");
                     } else {
                         System.out.println("Логин уже занят");
                         alertMessage.warningMessage("Логин уже занят. Выберите другой логин");
@@ -69,27 +84,30 @@ public class RegPageController {
                 throw new RuntimeException(e);
             }
         });
+
         cancelBtn.setOnAction(event -> {
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.confirmationMessage("Вы действительно хотите отменить регистрацию?");
             if (alertMessage.checkconfirm())
-                Utils.changeScene(event, "loginpage.fxml", "DeliveryService");
+                Utils.changeScene(event, "managermain.fxml", "Главная страница (Менеджер)");
             else {
                 ;
             }
         });
+
     }
+
+
     private void signUp() throws SQLException {
         String name = nameField.getText();
         String number = numberField.getText();
-        String address = addressField.getText();
-        String login = loginField.getText();
+        String dcid = deliverycenterChoice.getValue().split(" ")[0];
+        String login = logincourField.getText();
         String password = passField.getText();
 
-        User user = new User("",login, password, "0");
-        Client client = new Client("", name, number, address, "", "");
+        User user = new User("",login, password, "1");
+        Courier courier = new Courier("",name,number,dcid,"");
         DBConnection.getInstance().signUpUser(user);
-        DBConnection.getInstance().signUpClient(client, user);
+        DBConnection.getInstance().signUpCourier(courier, user);
     }
-
 }

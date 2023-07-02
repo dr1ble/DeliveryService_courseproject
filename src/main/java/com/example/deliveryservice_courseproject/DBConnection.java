@@ -131,6 +131,21 @@ public class DBConnection {
         return client;
     }
 
+    public Courier getCourierData(String login) throws SQLException{
+        ResultSet resultSet = null;
+        String selectUserdata = "SELECT couriers.id, couriers.name, couriers.number, couriers.delivery_center_id, couriers.user_id FROM couriers JOIN users ON couriers.user_id = users.id WHERE login" + "=?";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(selectUserdata);
+        preparedStatement.setString(1, login);
+        resultSet = preparedStatement.executeQuery();
+        Courier courier = null;
+
+        if (resultSet.next()) {
+            courier = new Courier(resultSet.getString("id"), resultSet.getString("name"),
+                    resultSet.getString("number"), resultSet.getString("delivery_center_id"), resultSet.getString("user_id"));
+        }
+        return courier;
+    }
+
     public void updatePass(String login, String password) throws SQLException {
         String updateUsers = "UPDATE " + DBConsts.USERS_TABLE + " SET " + DBConsts.USERS_PASSWORD + "=?" + " WHERE " + DBConsts.USERS_LOGIN + "=? ";
 
@@ -276,6 +291,17 @@ public class DBConnection {
     }
 
 
+    public ObservableList<DeliveryCenter> getDCdata() throws SQLException {
+        ObservableList<DeliveryCenter> list = FXCollections.observableArrayList();
+        PreparedStatement ps = getConnection().prepareStatement("select * from delivery_centers");
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            list.add(new DeliveryCenter(rs.getString("id"), rs.getString("name"), rs.getString("address")));
+        }
+        return list;
+    }
+
+
     public int getAccessLevel(String login) throws SQLException {
         ResultSet resultSet = null;
 
@@ -320,5 +346,17 @@ public class DBConnection {
         psUpdatePackage.setString(5, id);
 
         psUpdatePackage.executeUpdate();
+    }
+
+    public void signUpCourier(Courier courier, User user) throws SQLException {
+        String insertCourier = "INSERT INTO couriers (name,number,delivery_center_id,user_id) VALUES (?,?,?,?)";
+
+        PreparedStatement preStatementClients = getConnection().prepareStatement(insertCourier);
+        preStatementClients.setString(1, courier.getName());
+        preStatementClients.setString(2, courier.getNumber());
+        preStatementClients.setString(3, courier.getDelivery_center_id());
+        preStatementClients.setString(4, getID(user.getLogin()));
+
+        preStatementClients.executeUpdate();
     }
 }
