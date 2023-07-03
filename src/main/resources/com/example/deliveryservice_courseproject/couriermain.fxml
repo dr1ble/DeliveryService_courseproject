@@ -24,35 +24,35 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="acceptPackageBtn" mnemonicParsing="false" opacity="0.0" prefHeight="130.0" prefWidth="148.0" text="Подтвердить посылку" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Подтвердить посылку" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Button fx:id="deliveryBtn" mnemonicParsing="false" opacity="0.0" prefHeight="130.0" prefWidth="148.0" text="Подтвердить посылку" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Доставка" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <font>
                         <Font name="Calibri" size="15.0" />
                     </font>
                 </Text>
-                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Отправления" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Мои доставки" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <font>
                         <Font name="Calibri" size="15.0" />
                     </font>
                 </Text>
-                <Button fx:id="allPackagesBtn" mnemonicParsing="false" opacity="0.0" prefHeight="125.0" prefWidth="141.0" text="Отправления" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                <ImageView fitHeight="149.0" fitWidth="146.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                    <image>
-                        <Image url="@../../../assets/acceptpackage.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="117.0" fitWidth="127.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                    <image>
-                        <Image url="@../../../assets/orderslist.png" />
-                    </image>
-                </ImageView>
+                <Button fx:id="mydeliveriesBtn" mnemonicParsing="false" opacity="0.0" prefHeight="125.0" prefWidth="141.0" text="Мои доставки" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <ImageView fitHeight="128.0" fitWidth="136.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../../../assets/takeorder.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="116.0" fitWidth="122.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../../../assets/giverecipient.png" />
+               </image>
+            </ImageView>
             </children>
         </GridPane>
         <AnchorPane layoutX="125.0" prefHeight="71.0" prefWidth="677.0" style="-fx-background-color: #142B14;">
             <children>
                 <Text fx:id="namefield" fill="WHITE" layoutX="80.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HELLOMESSAGE" textAlignment="CENTER" wrappingWidth="516.7734375">
                     <font>
-                        <Font name="Calibri Bold" size="45.0" />
+                        <Font name="Calibri Bold" size="35.0" />
                     </font>
                 </Text>
             </children>

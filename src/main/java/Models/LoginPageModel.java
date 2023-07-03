@@ -76,6 +76,24 @@ public class LoginPageModel {
         return false;
     }
 
+    public boolean loginAdmin(String login, String password) throws SQLException {
+
+        ResultSet resultSet = DBConnection.getInstance().getUser(login, HashCoder.toHash(password));
+        int count = 0;
+        while (resultSet.next()){
+            count++;
+        }
+        if(count>=1){
+            System.out.println("Успешная авторизация! Здравствуйте " + login + " (admin)!");
+            user = DBConnection.getInstance().getUserData(login, password);
+            client = null;
+            courier = null;
+            return true;
+        }
+        return false;
+    }
+
+
     public User getUser() {
         return user;
     }

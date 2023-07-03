@@ -372,4 +372,61 @@ public class DBConnection {
 
         preStatementClients.executeUpdate();
     }
+
+    public ObservableList<Package> getDataPackagesForCur(Courier courier, String status) throws SQLException {
+        ObservableList<Package> list = FXCollections.observableArrayList();
+        PreparedStatement ps = getConnection().prepareStatement("select * from packages WHERE packages.status " +  "=?" +  " AND courier_id " + "=?");
+        ps.setString(1, status);
+        ps.setString(2, courier.getId());
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            list.add(new Package(rs.getString("id"),rs.getString("type_of_delivery"),
+                    rs.getString("weight"), rs.getString("status"), rs.getString("date_start"),
+                    rs.getString("date_end"), rs.getString("courier_id"), rs.getString("sender_id"),
+                    rs.getString("recipient_id"), rs.getString("departcenter_id"), rs.getString("receivingcenter_id")));
+        }
+        return list;
+    }
+
+    public void setPackageStatus(String status, String packageid) throws SQLException {
+        String setStatus = "UPDATE packages SET status" + "=?" + " WHERE id " + "=?";
+
+        PreparedStatement preStatementUpdateUsers = getConnection().prepareStatement(setStatus);
+
+        preStatementUpdateUsers.setString(1, status);
+        preStatementUpdateUsers.setString(2, packageid);
+        preStatementUpdateUsers.executeUpdate();
+    }
+
+    public void setPackageEndDate(String date, String packageid) throws SQLException {
+        String setStatus = "UPDATE packages SET date_end" + "=?" + " WHERE id " + "=?";
+
+        PreparedStatement preStatementUpdateUsers = getConnection().prepareStatement(setStatus);
+
+        preStatementUpdateUsers.setString(1, date);
+        preStatementUpdateUsers.setString(2, packageid);
+        preStatementUpdateUsers.executeUpdate();
+    }
+
+
+    public Client getRecipientData(String id) throws SQLException{
+        ResultSet resultSet = null;
+//        String selectUserdata = "SELECT " + DBConsts.CLIENTS_ID + " AS client_id" + ", " + DBConsts.CLIENTS_NAME + ", " + DBConsts.CLIENTS_NUMBER + ", " + DBConsts.CLIENTS_ADDRESS + " FROM " + DBConsts.CLIENTS_TABLE +
+//                " JOIN " + DBConsts.USERS_TABLE + " ON " + DBConsts.CLIENTS_TABLE + "." + DBConsts.CLIENTS_USERID + "=" + DBConsts.USERS_TABLE + "." + DBConsts.USERS_ID +
+//                " WHERE " + DBConsts.USERS_TABLE + "." + DBConsts.USERS_LOGIN  + "=?";
+        String selectUserdata = "SELECT clients.name, clients.number, clients.address FROM clients JOIN packages ON clients.id = packages.recipient_id WHERE clients.id" + "=?";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(selectUserdata);
+        preparedStatement.setString(1, id);
+        resultSet = preparedStatement.executeQuery();
+        Client client = null;
+
+        if (resultSet.next()) {
+            String name = resultSet.getString(DBConsts.CLIENTS_NAME);
+            String number = resultSet.getString(DBConsts.CLIENTS_NUMBER);
+            String address = resultSet.getString(DBConsts.CLIENTS_ADDRESS);
+            client = new Client("", name, number, address, "","");
+        }
+        return client;
+    }
+
 }

@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
-public class CourierMainController {
+public class AdminMainController {
 
     Data data = Data.getInstance();
 
@@ -21,11 +21,13 @@ public class CourierMainController {
     private URL location;
 
     @FXML
-    private Button deliveryBtn;
-
+    private Button clientsBtn;
 
     @FXML
-    private Button mydeliveriesBtn;
+    private Button couriersBtn;
+
+    @FXML
+    private Button deliverycentersBtn;
 
     @FXML
     private Button exitBtn;
@@ -34,11 +36,15 @@ public class CourierMainController {
     private Text namefield;
 
     @FXML
-    void initialize() {
-        namefield.setText("Здравствуйте, " + data.getCourier().getName() + "!");
+    private Button packagesBtn;
 
-        deliveryBtn.setOnAction(event ->
-                Utils.changeScene(event,"courierdelivery.fxml","Доставка"));
+    @FXML
+    private Button usersBtn;
+
+    @FXML
+    void initialize() {
+        namefield.setText("Здравствуйте, " + data.getUser().getLogin() + "!");
+
 
         exitBtn.setOnAction(event -> {
             AlertMessage alertMessage = new AlertMessage();

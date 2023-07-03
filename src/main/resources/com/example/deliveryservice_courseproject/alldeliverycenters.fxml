@@ -40,7 +40,7 @@
                                           <Font size="9.0" />
                                       </font>
                                   </TextField>
-                                  <Text fx:id="packageIDTEXT12" fill="WHITE" layoutX="664.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Адрес центра" textAlignment="CENTER" wrappingWidth="82.6796875">
+                                  <Text fill="WHITE" layoutX="664.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Адрес центра" textAlignment="CENTER" wrappingWidth="82.6796875">
                                       <font>
                                           <Font name="Calibri Bold" size="12.0" />
                                       </font>
@@ -50,7 +50,7 @@
                                           <Font size="9.0" />
                                       </font>
                                   </TextField>
-                                  <Text fx:id="packageIDTEXT1211" fill="WHITE" layoutX="636.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номер центра доставки" textAlignment="CENTER" wrappingWidth="126.6796875">
+                                  <Text fill="WHITE" layoutX="636.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Номер центра доставки" textAlignment="CENTER" wrappingWidth="126.6796875">
                                       <font>
                                           <Font name="Calibri Bold" size="12.0" />
                                       </font>
@@ -60,7 +60,7 @@
                                           <Font size="9.0" />
                                       </font>
                                   </TextField>
-                                  <Text fx:id="packageIDTEXT121" fill="WHITE" layoutX="626.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Название центра доставки" textAlignment="CENTER" wrappingWidth="147.6796875">
+                                  <Text fill="WHITE" layoutX="626.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Название центра доставки" textAlignment="CENTER" wrappingWidth="147.6796875">
                                       <font>
                                           <Font name="Calibri Bold" size="12.0" />
                                       </font>
