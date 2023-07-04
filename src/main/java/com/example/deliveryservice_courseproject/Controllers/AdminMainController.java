@@ -45,6 +45,17 @@ public class AdminMainController {
     void initialize() {
         namefield.setText("Здравствуйте, " + data.getUser().getLogin() + "!");
 
+        usersBtn.setOnAction(event -> Utils.changeScene(event, "adminusers.fxml", "Пользователи"));
+
+        clientsBtn.setOnAction(event -> Utils.changeScene(event, "adminclients.fxml", "Клиенты"));
+
+        couriersBtn.setOnAction(event -> Utils.changeScene(event, "admincouriers.fxml", "Курьеры"));
+
+        packagesBtn.setOnAction(event -> Utils.changeScene(event, "adminpackages.fxml", "Отправления"));
+
+        deliverycentersBtn.setOnAction(event -> Utils.changeScene(event, "admindeliverycenters.fxml", "Центры доставки"));
+
+
 
         exitBtn.setOnAction(event -> {
             AlertMessage alertMessage = new AlertMessage();

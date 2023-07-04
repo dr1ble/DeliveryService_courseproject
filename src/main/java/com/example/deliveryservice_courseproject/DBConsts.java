@@ -4,6 +4,8 @@ public class DBConsts {
     public static final String CLIENTS_TABLE = "clients";
     public static final String CLIENTS_ID = "id";
     public static final String CLIENTS_NAME = "name";
+
+    public static final String CLIENTS_NEARDC = "nearest_dc_id";
     public static final String CLIENTS_NUMBER = "number";
     public static final String CLIENTS_ADDRESS = "address";
     public static final String CLIENTS_LOGIN = "login";

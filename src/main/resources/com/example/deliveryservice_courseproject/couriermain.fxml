@@ -30,7 +30,7 @@
                         <Font name="Calibri" size="15.0" />
                     </font>
                 </Text>
-                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Мои доставки" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Мои доставки" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                     <font>
                         <Font name="Calibri" size="15.0" />
                     </font>
@@ -41,7 +41,7 @@
                   <Image url="@../../../assets/takeorder.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="116.0" fitWidth="122.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fitHeight="116.0" fitWidth="122.0" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../../../assets/giverecipient.png" />
                </image>

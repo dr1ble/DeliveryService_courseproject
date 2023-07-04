@@ -87,7 +87,7 @@ public class RegPageController {
         String password = passField.getText();
 
         User user = new User("",login, password, "0");
-        Client client = new Client("", name, number, address, "", "");
+        Client client = new Client("", name, number, address, null, "");
         DBConnection.getInstance().signUpUser(user);
         DBConnection.getInstance().signUpClient(client, user);
     }

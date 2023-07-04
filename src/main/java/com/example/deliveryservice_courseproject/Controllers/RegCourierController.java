@@ -40,6 +40,7 @@ public class RegCourierController {
 
     @FXML
     private Button regBtn;
+    AlertMessage alertMessage = new AlertMessage();
 
 
     DBConnection db;
@@ -62,7 +63,6 @@ public class RegCourierController {
 
 
         regBtn.setOnAction(event -> {
-            AlertMessage alertMessage = new AlertMessage();
             try {
                 if (!nameField.getText().isEmpty() && !numberField.getText().isEmpty() && deliverycenterChoice.getValue() != null
                         && !logincourField.getText().isEmpty() && !passField.getText().isEmpty()) {

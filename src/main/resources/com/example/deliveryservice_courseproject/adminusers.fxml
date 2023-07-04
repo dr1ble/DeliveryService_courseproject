@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #345830;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.deliveryservice_courseproject.Controllers.AdminUsersController">
+    <children>
+        <TabPane fx:id="usersPane" layoutY="14.0" prefHeight="589.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Пользователи">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="557.0" prefWidth="705.0">
+                            <children>
+                                <TableView fx:id="usersTable" layoutY="-2.0" prefHeight="558.0" prefWidth="602.0">
+                                    <columns>
+                                        <TableColumn fx:id="useridColumn" prefWidth="45.0" text="ID" />
+                                        <TableColumn fx:id="userloginColumn" prefWidth="142.0" text="Логин" />
+                                        <TableColumn fx:id="userpasswordColumn" prefWidth="188.0" text="Пароль" />
+                              <TableColumn fx:id="userlevelColumn" prefWidth="226.0" text="Уровень доступа" />
+                                    </columns>
+                                </TableView>
+                        <Pane layoutX="601.0" prefHeight="61.0" prefWidth="200.0" style="-fx-background-color: green;" />
+                                <TextField fx:id="userpassField" layoutX="620.0" layoutY="148.0" prefHeight="25.0" prefWidth="173.0" promptText="Пароль">
+                                    <font>
+                                        <Font size="9.0" />
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="651.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Уровень доступа" textAlignment="CENTER" wrappingWidth="108.6796875">
+                                    <font>
+                                        <Font name="Calibri Bold" size="12.0" />
+                                    </font>
+                                </Text>
+                                <TextField fx:id="userloginField" layoutX="617.0" layoutY="90.0" prefHeight="25.0" prefWidth="176.0" promptText="Логин пользователя">
+                                    <font>
+                                        <Font size="9.0" />
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="632.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" textAlignment="CENTER" wrappingWidth="126.6796875">
+                                    <font>
+                                        <Font name="Calibri Bold" size="12.0" />
+                                    </font>
+                                </Text>
+                                <TextField fx:id="userlevelField" layoutX="620.0" layoutY="213.0" prefHeight="25.0" prefWidth="170.0" promptText="Уровень доступа">
+                                    <font>
+                                        <Font size="9.0" />
+                                    </font>
+                                </TextField>
+                                <Text fill="WHITE" layoutX="628.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль" textAlignment="CENTER" wrappingWidth="147.6796875">
+                                    <font>
+                                        <Font name="Calibri Bold" size="12.0" />
+                                    </font>
+                                </Text>
+                        <TextField fx:id="userIdField" editable="false" layoutX="612.0" layoutY="14.0" prefHeight="25.0" prefWidth="176.0" promptText="ID пользователя">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </TextField>
+                        <Text fill="WHITE" layoutX="638.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин" textAlignment="CENTER" wrappingWidth="126.6796875">
+                           <font>
+                              <Font name="Calibri Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="userAddBtn" layoutX="635.0" layoutY="325.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="140.0" style="-fx-background-color: #0da808;" text="Добавить" textFill="WHITE" />
+                        <Button fx:id="userUpdateBtn" layoutX="635.0" layoutY="380.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="141.0" style="-fx-background-color: blue;" text="Обновить" textFill="WHITE" />
+                        <Pane layoutX="602.0" layoutY="305.0" prefHeight="11.0" prefWidth="199.0" style="-fx-background-color: green;" />
+                        <Button fx:id="userDeleteBtn" layoutX="635.0" layoutY="437.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="141.0" style="-fx-background-color: red;" text="Удалить" textFill="WHITE" />
+                        <Pane layoutX="601.0" layoutY="369.0" prefHeight="4.0" prefWidth="199.0" style="-fx-background-color: green;" />
+                        <Pane layoutX="601.0" layoutY="424.0" prefHeight="4.0" prefWidth="199.0" style="-fx-background-color: green;" />
+                        <Pane layoutX="601.0" layoutY="488.0" prefHeight="4.0" prefWidth="199.0" style="-fx-background-color: green;" />
+                        <Button fx:id="clearFieldsBtn" layoutX="649.0" layoutY="266.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Очистить поля">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                                  <Button fx:id="backBtn" layoutX="705.0" layoutY="519.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="80.0" text="Назад">
+                                      <font>
+                                          <Font name="Calibri" size="14.0" />
+                                      </font>
+                                  </Button>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+      <Pane fx:id="clientregPane" layoutX="208.0" layoutY="158.0" prefHeight="303.0" prefWidth="379.0" style="-fx-background-color: green;" visible="false">
+         <children>
+            <TextField fx:id="clientNameField" layoutX="98.0" layoutY="75.0" prefHeight="31.0" prefWidth="184.0" promptText="Имя" />
+            <TextField fx:id="clientNumberField" layoutX="98.0" layoutY="118.0" prefHeight="31.0" prefWidth="184.0" promptText="Номер телефона" />
+            <TextField fx:id="clientAddressField" layoutX="98.0" layoutY="159.0" prefHeight="31.0" prefWidth="184.0" promptText="Адрес" />
+            <Text fill="WHITE" layoutX="77.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добавить клиента" textAlignment="CENTER" wrappingWidth="225.6796875">
+               <font>
+                  <Font name="Calibri Bold" size="28.0" />
+               </font>
+            </Text>
+            <TextField fx:id="clientCenterDeliveryField" layoutX="98.0" layoutY="197.0" prefHeight="31.0" prefWidth="184.0" promptText="ID ближайшего центра доставки" />
+            <Button fx:id="clientregBtn" layoutX="138.0" layoutY="241.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Добавить">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button fx:id="canceladdclientBtn" layoutX="160.0" layoutY="277.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Отмена">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="courierregPane" layoutX="210.0" layoutY="160.0" prefHeight="311.0" prefWidth="387.0" style="-fx-background-color: green;" visible="false">
+         <children>
+            <TextField fx:id="courierNameField" layoutX="98.0" layoutY="75.0" prefHeight="31.0" prefWidth="184.0" promptText="Имя" />
+            <TextField fx:id="courierNumberField" layoutX="98.0" layoutY="118.0" prefHeight="31.0" prefWidth="184.0" promptText="Номер телефона" />
+            <Text fill="WHITE" layoutX="77.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Добавить курьера" textAlignment="CENTER" wrappingWidth="225.6796875">
+               <font>
+                  <Font name="Calibri Bold" size="28.0" />
+               </font>
+            </Text>
+            <TextField fx:id="courierCenterDeliveryField" layoutX="98.0" layoutY="162.0" prefHeight="31.0" prefWidth="184.0" promptText="ID ближайшего центра доставки" />
+            <Button fx:id="courierregBtn" layoutX="138.0" layoutY="219.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Добавить">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+            <Button fx:id="canceladdcourierBtn" layoutX="160.0" layoutY="255.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Отмена">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+    </children>
+    <cursor>
+        <Cursor fx:constant="HAND" />
+    </cursor>
+</AnchorPane>

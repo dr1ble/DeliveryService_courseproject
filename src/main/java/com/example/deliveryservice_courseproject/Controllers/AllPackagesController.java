@@ -132,10 +132,7 @@ public class AllPackagesController {
         });
     }
 
-    @FXML
-    void initialize() throws SQLException {
-        getPackageOnClick();
-
+    void fillTable() throws SQLException {
         packageidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         typedeliveryColumn.setCellValueFactory(new PropertyValueFactory<>("type_of_delivery"));
         weightColumn.setCellValueFactory(new PropertyValueFactory<>("weight"));
@@ -150,6 +147,13 @@ public class AllPackagesController {
 
         packagesData = db.getDataPackages();
         allPackage.setItems(packagesData);
+
+    }
+
+    @FXML
+    void initialize() throws SQLException {
+        getPackageOnClick();
+        fillTable();
 
 
         backBtn.setOnAction(event -> Utils.changeScene(event,"managermain.fxml", "Главная страница (Менеджер)"));

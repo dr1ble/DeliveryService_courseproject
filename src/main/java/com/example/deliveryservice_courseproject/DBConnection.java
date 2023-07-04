@@ -50,13 +50,14 @@ public class DBConnection {
     }
 
     public void signUpClient(Client client, User user) throws SQLException {
-        String insertClients = "INSERT INTO " + DBConsts.CLIENTS_TABLE + "(" + DBConsts.CLIENTS_NAME + "," + DBConsts.CLIENTS_NUMBER + "," + DBConsts.CLIENTS_ADDRESS + "," + DBConsts.CLIENTS_USERID +")" + "VALUES(?,?,?,?)";
+        String insertClients = "INSERT INTO " + DBConsts.CLIENTS_TABLE + "(" + DBConsts.CLIENTS_NAME + "," + DBConsts.CLIENTS_NUMBER + "," + DBConsts.CLIENTS_ADDRESS + ", " + DBConsts.CLIENTS_NEARDC +"," + DBConsts.CLIENTS_USERID +")" + "VALUES(?,?,?,?,?)";
 
         PreparedStatement preStatementClients = getConnection().prepareStatement(insertClients);
         preStatementClients.setString(1, client.getName());
         preStatementClients.setString(2, client.getNumber());
         preStatementClients.setString(3, client.getAddress());
-        preStatementClients.setString(4, getID(user.getLogin()));
+        preStatementClients.setString(4, client.getNearest_dc_id());
+        preStatementClients.setString(5, getID(user.getLogin()));
 
         preStatementClients.executeUpdate();
     }
@@ -96,7 +97,7 @@ public class DBConnection {
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet.next(); // если есть хотя бы одна строка в результате запроса, значит логин существует
     }
-    public User getUserData(String login, String password) throws SQLException{
+    public User getCurUserData(String login, String password) throws SQLException{
         ResultSet resultSet = null;
         String selectUserdata = "SELECT * FROM " + DBConsts.USERS_TABLE + " WHERE " + DBConsts.USERS_LOGIN  + " =?";
         PreparedStatement preparedStatement = getConnection().prepareStatement(selectUserdata);
@@ -223,7 +224,6 @@ public class DBConnection {
         preStatementInsertPackages.setString(3, status); preStatementInsertPackages.setString(4, senderId);
         preStatementInsertPackages.setString(5, recieverId); preStatementInsertPackages.setString(6, nearestdc);
         preStatementInsertPackages.executeUpdate();
-
     }
 
     public String getPackageId() throws SQLException {
@@ -429,4 +429,213 @@ public class DBConnection {
         return client;
     }
 
+    public ObservableList<User> getUsersData() throws SQLException {
+        ObservableList<User> list = FXCollections.observableArrayList();
+        PreparedStatement ps = getConnection().prepareStatement("select * from users");
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            list.add(new User(rs.getString("id"),rs.getString("login"),rs.getString("password"),rs.getString("accesslevel")));
+        }
+        return list;
+    }
+
+    public void deleteUser(String id) throws SQLException {
+        String deleteUser = "DELETE FROM users WHERE id =?";
+        PreparedStatement preStatementUsers = getConnection().prepareStatement(deleteUser);
+
+        preStatementUsers.setString(1, id);
+
+
+        preStatementUsers.executeUpdate();
+    }
+
+    public void updateUser(User user) throws SQLException {
+        String updateUser = "UPDATE users SET login =?, password =?, accesslevel =? WHERE id =?";
+        PreparedStatement preStatementUsers = getConnection().prepareStatement(updateUser);
+
+        preStatementUsers.setString(1, user.getLogin());
+        preStatementUsers.setString(2, HashCoder.toHash(user.getPassword()));
+        preStatementUsers.setString(3, user.getAccesslevel());
+        preStatementUsers.setString(4, user.getId());
+
+        preStatementUsers.executeUpdate();
+    }
+
+    public ObservableList<Client> getClientsData() throws SQLException {
+        ObservableList<Client> list = FXCollections.observableArrayList();
+        PreparedStatement ps = getConnection().prepareStatement("select * from clients");
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            list.add(new Client(rs.getString("id"), rs.getString("name"), rs.getString("number"), rs.getString("address"), rs.getString("nearest_dc_id"), rs.getString("user_id")));
+        }
+        return list;
+    }
+
+    public void updateClient(Client client) throws SQLException {
+        String updateClient = "UPDATE clients SET name =?, number =?, address =?, nearest_dc_id =? WHERE id =?";
+        PreparedStatement preStatementUsers = getConnection().prepareStatement(updateClient);
+
+        preStatementUsers.setString(1, client.getName());
+        preStatementUsers.setString(2, client.getNumber());
+        preStatementUsers.setString(3, client.getAddress());
+        preStatementUsers.setString(4, client.getNearest_dc_id());
+        preStatementUsers.setString(5, client.getId());
+
+        preStatementUsers.executeUpdate();
+    }
+
+    public void deleteClient(String id, String user_id) throws SQLException {
+        String deleteClient = "DELETE FROM clients WHERE id =?";
+        PreparedStatement preStatementUsers = getConnection().prepareStatement(deleteClient);
+
+        preStatementUsers.setString(1, id);
+
+        String deleteClientfromUsers = "DELETE FROM users WHERE id =?";
+        PreparedStatement psClient = getConnection().prepareStatement(deleteClientfromUsers);
+        psClient.setString(1,user_id);
+
+        psClient.executeUpdate();
+    }
+
+    public boolean checkDc(String dc) throws SQLException {
+        String checkDc  = "SELECT *  from delivery_centers WHERE id =?";
+        PreparedStatement psDc = getConnection().prepareStatement(checkDc);
+
+        psDc.setString(1,dc);
+
+        ResultSet resultSet = psDc.executeQuery();
+        return resultSet.next(); // если есть хотя бы одна строка в результате запроса, значит логин существует
+    }
+
+    public ObservableList<Courier> getCouriersData() throws SQLException {
+        ObservableList<Courier> list = FXCollections.observableArrayList();
+        PreparedStatement ps = getConnection().prepareStatement("select * from couriers");
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            list.add(new Courier(rs.getString("id"), rs.getString("name"), rs.getString("number"), rs.getString("delivery_center_id"), rs.getString("user_id")));
+        }
+        return list;
+    }
+
+    public void updateCourier(Courier courier) throws SQLException {
+        String updateCourier = "UPDATE couriers SET name =?, number =?, delivery_center_id =? WHERE id =?";
+        PreparedStatement preStatementUsers = getConnection().prepareStatement(updateCourier);
+
+        preStatementUsers.setString(1, courier.getName());
+        preStatementUsers.setString(2, courier.getNumber());
+        preStatementUsers.setString(3, courier.getDelivery_center_id());
+        preStatementUsers.setString(4, courier.getId());
+
+        preStatementUsers.executeUpdate();
+    }
+
+    public void deleteCourier(String id, String user_id) throws SQLException {
+        String deleteCourier = "DELETE FROM couriers WHERE id =?";
+        PreparedStatement preStatementUsers = getConnection().prepareStatement(deleteCourier);
+
+        preStatementUsers.setString(1, id);
+
+        String deleteCourierfromUsers = "DELETE FROM users WHERE id =?";
+        PreparedStatement psClient = getConnection().prepareStatement(deleteCourierfromUsers);
+        psClient.setString(1,user_id);
+
+        psClient.executeUpdate();
+    }
+
+    public void updatePackage(Package pckage) throws SQLException {
+        String updatePackage = "UPDATE packages SET type_of_delivery =?, weight =?, status =?, date_start =?, date_end =?, courier_id =?" +
+                ", sender_id =?, recipient_id =?, departcenter_id =?, receivingcenter_id =? WHERE id =?";
+        PreparedStatement prstPackage = getConnection().prepareStatement(updatePackage);
+
+        prstPackage.setString(1, pckage.getType_of_delivery());
+        prstPackage.setString(2, pckage.getWeight());
+        prstPackage.setString(3, pckage.getStatus());
+        prstPackage.setString(4, pckage.getDate_start());
+        prstPackage.setString(5, pckage.getDate_end());
+        prstPackage.setString(6, pckage.getCourier_id());
+        prstPackage.setString(7, pckage.getSender_id());
+        prstPackage.setString(8, pckage.getRecipient_id());
+        prstPackage.setString(9, pckage.getDepartcenter_id());
+        prstPackage.setString(10, pckage.getReceivingcenter_id());
+        prstPackage.setString(11, pckage.getId());
+
+        prstPackage.executeUpdate();
+    }
+
+    public boolean checkCourier(String courierid) throws SQLException {
+        String checkDc  = "SELECT *  from couriers WHERE id =?";
+        PreparedStatement psDc = getConnection().prepareStatement(checkDc);
+
+        psDc.setString(1,courierid);
+
+        ResultSet resultSet = psDc.executeQuery();
+        return resultSet.next(); // если есть хотя бы одна строка в результате запроса, значит логин существует
+    }
+
+    public boolean checkClient(String clientid) throws SQLException {
+        String checkDc  = "SELECT *  from clients WHERE id =?";
+        PreparedStatement psDc = getConnection().prepareStatement(checkDc);
+
+        psDc.setString(1,clientid);
+
+        ResultSet resultSet = psDc.executeQuery();
+        return resultSet.next(); // если есть хотя бы одна строка в результате запроса, значит логин существует
+    }
+
+    public void addPackage(Package pckage) throws SQLException {
+        String insertPackages = "INSERT INTO packages(type_of_delivery, weight, status, date_start, date_end, courier_id, sender_id, recipient_id, departcenter_id, receivingcenter_id) VALUES(?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement preStatementInsertPackages = getConnection().prepareStatement(insertPackages);
+
+        preStatementInsertPackages.setString(1, pckage.getType_of_delivery());
+        preStatementInsertPackages.setString(2, pckage.getWeight());
+        preStatementInsertPackages.setString(3, pckage.getStatus());
+        preStatementInsertPackages.setString(4, pckage.getDate_start());
+        preStatementInsertPackages.setString(5, pckage.getDate_end());
+        preStatementInsertPackages.setString(6, pckage.getCourier_id());
+        preStatementInsertPackages.setString(7, pckage.getSender_id());
+        preStatementInsertPackages.setString(8, pckage.getRecipient_id());
+        preStatementInsertPackages.setString(9, pckage.getDepartcenter_id());
+        preStatementInsertPackages.setString(10, pckage.getReceivingcenter_id());
+
+        preStatementInsertPackages.executeUpdate();
+    }
+
+    public void deletePackage(String id) throws SQLException {
+        String deletePackage = "DELETE FROM packages WHERE id =?";
+        PreparedStatement preStatementPackages = getConnection().prepareStatement(deletePackage);
+
+        preStatementPackages.setString(1, id);
+        preStatementPackages.executeUpdate();
+    }
+
+    public void updateDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
+        String updateDeliveryCenter = "UPDATE delivery_centers SET name =?, address =? WHERE id =?";
+        PreparedStatement prstupdateDC = getConnection().prepareStatement(updateDeliveryCenter);
+
+        prstupdateDC.setString(1, deliveryCenter.getName());
+        prstupdateDC.setString(2, deliveryCenter.getAddress());
+        prstupdateDC.setString(3, deliveryCenter.getId());
+
+
+        prstupdateDC.executeUpdate();
+    }
+
+    public void addDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
+
+        String insertDeliveryCenter = "INSERT INTO delivery_centers(name, address) VALUES(?,?)";
+        PreparedStatement prStInsertDC = getConnection().prepareStatement(insertDeliveryCenter);
+
+        prStInsertDC.setString(1, deliveryCenter.getName());
+        prStInsertDC.setString(2, deliveryCenter.getAddress());
+
+        prStInsertDC.executeUpdate();
+    }
+
+    public void deleteDeliveryCenter(String id) throws SQLException {
+        String deleteDC = "DELETE FROM delivery_centers WHERE id =?";
+        PreparedStatement prstDC = getConnection().prepareStatement(deleteDC);
+
+        prstDC.setString(1, id);
+        prstDC.executeUpdate();
+    }
 }

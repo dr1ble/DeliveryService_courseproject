@@ -34,7 +34,7 @@ public class LoginPageModel {
         }
         if(count>=1){
             System.out.println("Успешная авторизация! Здравствуйте " + login + "!");
-            user = DBConnection.getInstance().getUserData(login, password);
+            user = DBConnection.getInstance().getCurUserData(login, password);
             System.out.println(user.getId());
             client = DBConnection.getInstance().getClientData(login);
             System.out.println(client.getId());
@@ -52,7 +52,7 @@ public class LoginPageModel {
         }
         if(count>=1){
             System.out.println("Успешная авторизация! Здравствуйте " + login + " (manager)!");
-            user = DBConnection.getInstance().getUserData(login, password);
+            user = DBConnection.getInstance().getCurUserData(login, password);
             client = null;
             return true;
         }
@@ -68,7 +68,7 @@ public class LoginPageModel {
         }
         if(count>=1){
             System.out.println("Успешная авторизация! Здравствуйте " + login + " (courier)!");
-            user = DBConnection.getInstance().getUserData(login, password);
+            user = DBConnection.getInstance().getCurUserData(login, password);
             client = null;
             courier =  DBConnection.getInstance().getCourierData(login);
             return true;
@@ -85,7 +85,7 @@ public class LoginPageModel {
         }
         if(count>=1){
             System.out.println("Успешная авторизация! Здравствуйте " + login + " (admin)!");
-            user = DBConnection.getInstance().getUserData(login, password);
+            user = DBConnection.getInstance().getCurUserData(login, password);
             client = null;
             courier = null;
             return true;
