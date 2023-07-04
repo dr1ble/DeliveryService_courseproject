@@ -3,7 +3,7 @@ package com.example.deliveryservice_courseproject.Controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import Models.Data;
+import com.example.deliveryservice_courseproject.Models.Data;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

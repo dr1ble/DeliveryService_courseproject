@@ -1,4 +1,4 @@
-package Utils;
+package com.example.deliveryservice_courseproject.Other;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

@@ -1,15 +1,15 @@
 package com.example.deliveryservice_courseproject.Controllers;
 
-import Utils.HashCoder;
+import com.example.deliveryservice_courseproject.Other.HashCoder;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import Utils.AlertMessage;
+import com.example.deliveryservice_courseproject.Other.AlertMessage;
 
-import Models.Data;
-import com.example.deliveryservice_courseproject.DBConnection;
+import com.example.deliveryservice_courseproject.Models.Data;
+import com.example.deliveryservice_courseproject.Models.DBConnection;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

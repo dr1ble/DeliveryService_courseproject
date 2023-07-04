@@ -1,4 +1,4 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Models;
 
 public class Package {
     private String id,type_of_delivery,weight,status,date_start,date_end,courier_id,sender_id,recipient_id,departcenter_id,receivingcenter_id;

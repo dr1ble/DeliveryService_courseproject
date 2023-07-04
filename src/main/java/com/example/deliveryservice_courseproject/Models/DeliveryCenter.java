@@ -1,4 +1,4 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Models;
 
 public class DeliveryCenter {
     private  String id, name, address;

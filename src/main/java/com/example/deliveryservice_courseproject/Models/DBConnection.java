@@ -1,6 +1,7 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Models;
 
-import Utils.HashCoder;
+import com.example.deliveryservice_courseproject.Other.DBConsts;
+import com.example.deliveryservice_courseproject.Other.HashCoder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -205,7 +206,7 @@ public class DBConnection {
         ResultSet resultSet = null;
 //        String getClients = "SELECT " + DBConsts.CLIENTS_USERID + "," + DBConsts.CLIENTS_NAME + "," + DBConsts.CLIENTS_NUMBER + " FROM " + DBConsts.CLIENTS_TABLE
 //                + " WHERE" + DBConsts.USERS_ID + "<>" + "=?";
-        String getClients = "SELECT  user_id, name, number, nearest_dc_id FROM clients WHERE user_id NOT IN (" + "?)";
+        String getClients = "SELECT  id, name, number, nearest_dc_id FROM clients WHERE user_id NOT IN (" + "?)";
 
         PreparedStatement psGetClients = getConnection().prepareStatement(getClients);
 

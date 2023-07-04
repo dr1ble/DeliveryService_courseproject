@@ -1,8 +1,4 @@
-package Models;
-
-import com.example.deliveryservice_courseproject.Client;
-import com.example.deliveryservice_courseproject.Courier;
-import com.example.deliveryservice_courseproject.User;
+package com.example.deliveryservice_courseproject.Models;
 
 public class Data {
     private static final Data instance = new Data();

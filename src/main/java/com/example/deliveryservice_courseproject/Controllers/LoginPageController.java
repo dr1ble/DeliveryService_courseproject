@@ -4,10 +4,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import Models.LoginPageModel;
-import Utils.AlertMessage;
-import Models.Data;
-import com.example.deliveryservice_courseproject.DBConnection;
+import com.example.deliveryservice_courseproject.Models.LoginPageModel;
+import com.example.deliveryservice_courseproject.Other.AlertMessage;
+import com.example.deliveryservice_courseproject.Models.Data;
+import com.example.deliveryservice_courseproject.Models.DBConnection;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -1,6 +1,4 @@
-package Models;
-
-import com.example.deliveryservice_courseproject.DBConnection;
+package com.example.deliveryservice_courseproject.Models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

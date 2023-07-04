@@ -4,9 +4,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.example.deliveryservice_courseproject.DBConnection;
-import com.example.deliveryservice_courseproject.Package;
-import com.example.deliveryservice_courseproject.User;
+import com.example.deliveryservice_courseproject.Models.DBConnection;
+import com.example.deliveryservice_courseproject.Models.Package;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import Utils.AlertMessage;
+import com.example.deliveryservice_courseproject.Other.AlertMessage;
 
 public class AdminPackagesController {
 

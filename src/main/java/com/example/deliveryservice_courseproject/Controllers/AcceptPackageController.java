@@ -4,14 +4,15 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.example.deliveryservice_courseproject.Models.DBConnection;
 import com.example.deliveryservice_courseproject.*;
-import com.example.deliveryservice_courseproject.Package;
+import com.example.deliveryservice_courseproject.Models.Package;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import Utils.AlertMessage;
+import com.example.deliveryservice_courseproject.Other.AlertMessage;
 
 public class AcceptPackageController {
 

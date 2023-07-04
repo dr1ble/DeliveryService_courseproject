@@ -1,6 +1,4 @@
-package Models;
-
-import com.example.deliveryservice_courseproject.User;
+package com.example.deliveryservice_courseproject.Models;
 
 public class MainPageModel {
     private Data data;

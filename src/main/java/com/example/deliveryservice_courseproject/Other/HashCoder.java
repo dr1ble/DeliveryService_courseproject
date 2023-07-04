@@ -1,9 +1,7 @@
-package Utils;
+package com.example.deliveryservice_courseproject.Other;
 
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 
 // SHA-256

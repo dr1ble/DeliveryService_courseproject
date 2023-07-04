@@ -3,13 +3,12 @@ package com.example.deliveryservice_courseproject.Controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import Models.Data;
+import com.example.deliveryservice_courseproject.Models.Data;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import Utils.AlertMessage;
-import org.w3c.dom.events.MouseEvent;
+import com.example.deliveryservice_courseproject.Other.AlertMessage;
 
 public class ManagerMainController {
 

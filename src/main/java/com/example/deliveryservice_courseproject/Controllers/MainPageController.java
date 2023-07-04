@@ -3,15 +3,14 @@ package com.example.deliveryservice_courseproject.Controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import Models.MainPageModel;
-import Utils.AlertMessage;
-import Models.Data;
+import com.example.deliveryservice_courseproject.Models.MainPageModel;
+import com.example.deliveryservice_courseproject.Other.AlertMessage;
+import com.example.deliveryservice_courseproject.Models.Data;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 public class MainPageController {
     Data data = Data.getInstance();

@@ -4,15 +4,15 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import Models.Data;
-import com.example.deliveryservice_courseproject.DBConnection;
+import com.example.deliveryservice_courseproject.Models.Data;
+import com.example.deliveryservice_courseproject.Models.DBConnection;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import Utils.AlertMessage;
+import com.example.deliveryservice_courseproject.Other.AlertMessage;
 public class CourierDeliveryController {
 
     Data data = Data.getInstance();

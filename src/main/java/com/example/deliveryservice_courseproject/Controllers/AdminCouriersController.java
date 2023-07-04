@@ -4,6 +4,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.example.deliveryservice_courseproject.Models.Courier;
+import com.example.deliveryservice_courseproject.Models.DBConnection;
+import com.example.deliveryservice_courseproject.Models.User;
 import com.example.deliveryservice_courseproject.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import Utils.AlertMessage;
+import com.example.deliveryservice_courseproject.Other.AlertMessage;
 
 public class AdminCouriersController {
 

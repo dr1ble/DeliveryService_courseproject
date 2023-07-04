@@ -1,4 +1,4 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Models;
 
 public class User {
     private String login, password, id, accesslevel;

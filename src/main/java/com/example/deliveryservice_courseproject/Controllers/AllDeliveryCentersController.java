@@ -4,9 +4,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.example.deliveryservice_courseproject.DBConnection;
-import com.example.deliveryservice_courseproject.DeliveryCenter;
-import com.example.deliveryservice_courseproject.Package;
+import com.example.deliveryservice_courseproject.Models.DBConnection;
+import com.example.deliveryservice_courseproject.Models.DeliveryCenter;
+import com.example.deliveryservice_courseproject.Models.Package;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

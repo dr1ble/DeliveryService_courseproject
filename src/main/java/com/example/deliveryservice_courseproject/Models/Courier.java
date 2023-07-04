@@ -1,4 +1,4 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Models;
 
 public class Courier {
     private  String id, name, number,  delivery_center_id, user_id;

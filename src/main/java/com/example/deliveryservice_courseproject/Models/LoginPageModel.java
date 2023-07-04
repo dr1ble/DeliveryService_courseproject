@@ -1,10 +1,6 @@
-package Models;
+package com.example.deliveryservice_courseproject.Models;
 
-import Utils.HashCoder;
-import com.example.deliveryservice_courseproject.Client;
-import com.example.deliveryservice_courseproject.Courier;
-import com.example.deliveryservice_courseproject.DBConnection;
-import com.example.deliveryservice_courseproject.User;
+import com.example.deliveryservice_courseproject.Other.HashCoder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

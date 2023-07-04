@@ -1,4 +1,4 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Models;
 
 public class Client {
     private String id, user_id, nearest_dc_id;

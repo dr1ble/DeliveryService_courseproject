@@ -1,4 +1,4 @@
-package com.example.deliveryservice_courseproject;
+package com.example.deliveryservice_courseproject.Other;
 
 public class DBConsts {
     public static final String CLIENTS_TABLE = "clients";

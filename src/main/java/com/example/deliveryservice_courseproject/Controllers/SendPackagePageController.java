@@ -1,15 +1,14 @@
 package com.example.deliveryservice_courseproject.Controllers;
 
-import java.net.Socket;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import Models.Data;
-import Models.SendPackagePageModel;
-import com.example.deliveryservice_courseproject.DBConnection;
+import com.example.deliveryservice_courseproject.Models.Data;
+import com.example.deliveryservice_courseproject.Models.SendPackagePageModel;
+import com.example.deliveryservice_courseproject.Models.DBConnection;
 import com.example.deliveryservice_courseproject.Utils;
-import Utils.AlertMessage;
+import com.example.deliveryservice_courseproject.Other.AlertMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
