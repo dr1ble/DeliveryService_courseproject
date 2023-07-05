@@ -193,7 +193,7 @@ public class DBConnection {
     }
 
     public void updateAddress(String login, String newAddress) throws SQLException {
-        String updateUsers = "UPDATE " + DBConsts.CLIENTS_TABLE + " SET " + DBConsts.CLIENTS_NUMBER + "=?" + " WHERE " +
+        String updateUsers = "UPDATE " + DBConsts.CLIENTS_TABLE + " SET " + DBConsts.CLIENTS_ADDRESS + "=?" + " WHERE " +
                 DBConsts.CLIENTS_USERID + "=?";
 
         PreparedStatement preStatementUpdateUsers = getConnection().prepareStatement(updateUsers);
@@ -609,28 +609,28 @@ public class DBConnection {
         preStatementPackages.executeUpdate();
     }
 
-    public void updateDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
-        String updateDeliveryCenter = "UPDATE delivery_centers SET name =?, address =? WHERE id =?";
-        PreparedStatement prstupdateDC = getConnection().prepareStatement(updateDeliveryCenter);
+//    public void updateDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
+//        String updateDeliveryCenter = "UPDATE delivery_centers SET name =?, address =? WHERE id =?";
+//        PreparedStatement prstupdateDC = getConnection().prepareStatement(updateDeliveryCenter);
+//
+//        prstupdateDC.setString(1, deliveryCenter.getName());
+//        prstupdateDC.setString(2, deliveryCenter.getAddress());
+//        prstupdateDC.setString(3, deliveryCenter.getId());
+//
+//
+//        prstupdateDC.executeUpdate();
+//    }
 
-        prstupdateDC.setString(1, deliveryCenter.getName());
-        prstupdateDC.setString(2, deliveryCenter.getAddress());
-        prstupdateDC.setString(3, deliveryCenter.getId());
-
-
-        prstupdateDC.executeUpdate();
-    }
-
-    public void addDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
-
-        String insertDeliveryCenter = "INSERT INTO delivery_centers(name, address) VALUES(?,?)";
-        PreparedStatement prStInsertDC = getConnection().prepareStatement(insertDeliveryCenter);
-
-        prStInsertDC.setString(1, deliveryCenter.getName());
-        prStInsertDC.setString(2, deliveryCenter.getAddress());
-
-        prStInsertDC.executeUpdate();
-    }
+//    public void addDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
+//
+//        String insertDeliveryCenter = "INSERT INTO delivery_centers(name, address) VALUES(?,?)";
+//        PreparedStatement prStInsertDC = getConnection().prepareStatement(insertDeliveryCenter);
+//
+//        prStInsertDC.setString(1, deliveryCenter.getName());
+//        prStInsertDC.setString(2, deliveryCenter.getAddress());
+//
+//        prStInsertDC.executeUpdate();
+//    }
 
     public void deleteDeliveryCenter(String id) throws SQLException {
         String deleteDC = "DELETE FROM delivery_centers WHERE id =?";

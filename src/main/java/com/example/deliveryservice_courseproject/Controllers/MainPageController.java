@@ -3,7 +3,6 @@ package com.example.deliveryservice_courseproject.Controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.example.deliveryservice_courseproject.Models.MainPageModel;
 import com.example.deliveryservice_courseproject.Other.AlertMessage;
 import com.example.deliveryservice_courseproject.Models.Data;
 import com.example.deliveryservice_courseproject.Utils;
@@ -14,7 +13,6 @@ import javafx.scene.text.Text;
 
 public class MainPageController {
     Data data = Data.getInstance();
-    MainPageModel mainPageModel = new MainPageModel();
 
     @FXML
     private ResourceBundle resources;

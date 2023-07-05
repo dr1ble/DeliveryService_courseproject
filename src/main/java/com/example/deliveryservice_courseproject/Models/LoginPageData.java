@@ -5,7 +5,7 @@ import com.example.deliveryservice_courseproject.Other.HashCoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginPageModel {
+public class LoginPageData {
     private  User user;
     private Client client;
     private Courier courier;

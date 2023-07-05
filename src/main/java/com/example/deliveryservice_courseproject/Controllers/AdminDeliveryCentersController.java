@@ -177,7 +177,7 @@ public class AdminDeliveryCentersController {
         String address = addresscenterField.getText().trim();
 
         DeliveryCenter deliveryCenter = new DeliveryCenter(id,name,address);
-        db.updateDeliveryCenter(deliveryCenter);
+        deliveryCenter.updateDeliveryCenter(deliveryCenter);
     }
 
     private void addCenter() throws SQLException {
@@ -186,7 +186,8 @@ public class AdminDeliveryCentersController {
         String address = addresscenterField.getText().trim();
 
         DeliveryCenter deliveryCenter = new DeliveryCenter(id,name,address);
-        db.addDeliveryCenter(deliveryCenter);
+//        db.addDeliveryCenter(deliveryCenter);
+        deliveryCenter.addDeliveryCenter(deliveryCenter);
     }
 
     private void deleteCenter() throws Exception {

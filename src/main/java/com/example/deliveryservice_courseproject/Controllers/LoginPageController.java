@@ -4,7 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.example.deliveryservice_courseproject.Models.LoginPageModel;
+import com.example.deliveryservice_courseproject.Models.LoginPageData;
 import com.example.deliveryservice_courseproject.Other.AlertMessage;
 import com.example.deliveryservice_courseproject.Models.Data;
 import com.example.deliveryservice_courseproject.Models.DBConnection;
@@ -16,7 +16,7 @@ import javafx.scene.control.TextField;
 
 public class LoginPageController {
     Data data = Data.getInstance();
-    LoginPageModel loginPageModel = new LoginPageModel();
+    LoginPageData loginPageData = new LoginPageData();
 
     @FXML
     private ResourceBundle resources;
@@ -47,27 +47,27 @@ public class LoginPageController {
             String password = passField.getText().trim();
             if(!login.equals("") && !password.equals("")){
                 try {
-                    if(loginPageModel.login(login, password)) {
+                    if(loginPageData.login(login, password)) {
                         if (DBConnection.getInstance().getAccessLevel(login) == 0) {
-                            if (loginPageModel.loginClient(login, password)) {
-                                data.setUser(loginPageModel.getUser());
-                                data.setClient(loginPageModel.getClient());
+                            if (loginPageData.loginClient(login, password)) {
+                                data.setUser(loginPageData.getUser());
+                                data.setClient(loginPageData.getClient());
                                 Utils.changeScene(event, "mainpage.fxml", "Главная страница");
                             }
                         } else if (DBConnection.getInstance().getAccessLevel(login) == 2) {
-                            if (loginPageModel.loginManager(login, password)) {
-                                data.setUser(loginPageModel.getUser());
+                            if (loginPageData.loginManager(login, password)) {
+                                data.setUser(loginPageData.getUser());
                                 Utils.changeScene(event, "managermain.fxml", "Главная страница (Менеджер)");
                             }
                         } else if (DBConnection.getInstance().getAccessLevel(login) == 1) {
-                            if (loginPageModel.loginCourier(login, password)) {
-                                data.setUser(loginPageModel.getUser());
-                                data.setCourier(loginPageModel.getCourier());
+                            if (loginPageData.loginCourier(login, password)) {
+                                data.setUser(loginPageData.getUser());
+                                data.setCourier(loginPageData.getCourier());
                                 Utils.changeScene(event, "couriermain.fxml", "Главная страница (Курьер)");
                             }
                         } else if (DBConnection.getInstance().getAccessLevel(login) == 3) {
-                            if(loginPageModel.loginAdmin(login, password)){
-                                data.setUser(loginPageModel.getUser());
+                            if(loginPageData.loginAdmin(login, password)){
+                                data.setUser(loginPageData.getUser());
                                 Utils.changeScene(event, "adminmain.fxml", "Главная страница (Администратор)");
                             }
                         }

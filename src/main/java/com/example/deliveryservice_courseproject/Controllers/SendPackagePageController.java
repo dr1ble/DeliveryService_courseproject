@@ -1,11 +1,13 @@
 package com.example.deliveryservice_courseproject.Controllers;
 
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.example.deliveryservice_courseproject.Models.Data;
-import com.example.deliveryservice_courseproject.Models.SendPackagePageModel;
 import com.example.deliveryservice_courseproject.Models.DBConnection;
 import com.example.deliveryservice_courseproject.Utils;
 import com.example.deliveryservice_courseproject.Other.AlertMessage;
@@ -19,7 +21,6 @@ import javafx.scene.text.Text;
 public class SendPackagePageController {
     Data data = Data.getInstance();
 
-    SendPackagePageModel sendPackageModel = new SendPackagePageModel();
 
     @FXML
     private ResourceBundle resources;
@@ -57,8 +58,8 @@ public class SendPackagePageController {
             fastCheckBox.setSelected(false);
         });
 
-        for (int i = 0; i < sendPackageModel.getClients().size(); i++) {
-            toWho.getItems().addAll(sendPackageModel.getClients().get(i));
+        for (int i = 0; i < getClients().size(); i++) {
+            toWho.getItems().addAll(getClients().get(i));
         }
 
         sendBtn.setOnAction(event -> {
@@ -88,5 +89,15 @@ public class SendPackagePageController {
         });
 
         backBtn.setOnAction(event -> Utils.changeScene(event,"mainpage.fxml","Главная страница"));
+    }
+
+    public List<String> getClients() throws SQLException {
+        ResultSet resultSet = DBConnection.getInstance().getClients(data.getUser().getLogin());
+        List<String> clients = new ArrayList<>();
+
+        while (resultSet.next()){
+            clients.add(resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3) + " " + resultSet.getString(4));
+        }
+        return clients;
     }
 }
