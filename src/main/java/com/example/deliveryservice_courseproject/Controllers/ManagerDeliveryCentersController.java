@@ -4,9 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import com.example.deliveryservice_courseproject.Models.DBConnection;
-import com.example.deliveryservice_courseproject.Models.DeliveryCenter;
-import com.example.deliveryservice_courseproject.Models.Package;
+import com.example.deliveryservice_courseproject.Models.*;
 import com.example.deliveryservice_courseproject.Utils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,9 +14,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class AllDeliveryCentersController {
+public class ManagerDeliveryCentersController {
 
-    ObservableList<DeliveryCenter> deliveryCenters;
+    ManagerDeliveryCenters managerDeliveryCenters = new ManagerDeliveryCenters();
+
+    ObservableList<ManagerDeliveryCenters> deliveryCenters;
 
     @FXML
     private ResourceBundle resources;
@@ -27,13 +27,13 @@ public class AllDeliveryCentersController {
     private URL location;
 
     @FXML
-    private TableColumn<DeliveryCenter, String> addresscenterColumn;
+    private TableColumn<ManagerDeliveryCenters, String> addresscenterColumn;
 
     @FXML
     private TextField addresscenterField;
 
     @FXML
-    private TableView<DeliveryCenter> allDeliveryCenters;
+    private TableView<ManagerDeliveryCenters> allDeliveryCenters;
 
     @FXML
     private Button backBtn;
@@ -42,26 +42,13 @@ public class AllDeliveryCentersController {
     private TextField centerIdField;
 
     @FXML
-    private TableColumn<DeliveryCenter, String> centeridColumn;
+    private TableColumn<ManagerDeliveryCenters, String> centeridColumn;
 
     @FXML
-    private TableColumn<DeliveryCenter, String> namecenterColumn;
+    private TableColumn<ManagerDeliveryCenters, String> namecenterColumn;
 
     @FXML
     private TextField namecenterField;
-
-
-    DBConnection db;
-
-    {
-        try {
-            db = DBConnection.getInstance();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
 
     @FXML
     void getDCOnClick (){
@@ -71,13 +58,10 @@ public class AllDeliveryCentersController {
                 centerIdField.setText(dc.getId());
                 namecenterField.setText(dc.getName());
                 addresscenterField.setText(dc.getAddress());
-
             }
 
         });
     }
-
-
     @FXML
     void initialize() throws SQLException {
         getDCOnClick();
@@ -86,8 +70,7 @@ public class AllDeliveryCentersController {
         namecenterColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         addresscenterColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
 
-        deliveryCenters = db.getDCdata();
-        allDeliveryCenters.setItems(deliveryCenters);
+        allDeliveryCenters.setItems(managerDeliveryCenters.getObservableList());
 
 
 

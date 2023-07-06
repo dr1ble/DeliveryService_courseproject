@@ -2,13 +2,13 @@ package com.example.deliveryservice_courseproject.Controllers;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.example.deliveryservice_courseproject.Models.Courier;
-import com.example.deliveryservice_courseproject.Models.DBConnection;
-import com.example.deliveryservice_courseproject.Models.User;
+import com.example.deliveryservice_courseproject.Models.*;
 import com.example.deliveryservice_courseproject.Other.AlertMessage;
 import com.example.deliveryservice_courseproject.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 
 public class RegCourierController {
 
+    RegCourier regCourier = new RegCourier();
     @FXML
     private ResourceBundle resources;
 
@@ -58,12 +59,11 @@ public class RegCourierController {
 
     @FXML
     void initialize() throws SQLException {
+        ObservableList<DeliveryCenter> dcList= regCourier.getObservableDcList();
 
-        for (int i = 0; i < db.getDCdata().size(); i++) {
-            deliverycenterChoice.getItems().addAll(db.getDCdata().get(i).getId() + " " + db.getDCdata().get(i).getAddress() + " " + db.getDCdata().get(i).getName());
+        for (int i = 0; i < dcList.size(); i++) {
+            deliverycenterChoice.getItems().addAll(dcList.get(i).getId() + " " + dcList.get(i).getAddress() + " " + dcList.get(i).getName());
         }
-
-
 
         regBtn.setOnAction(event -> {
             try {
@@ -71,7 +71,7 @@ public class RegCourierController {
                         && !logincourField.getText().isEmpty() && !passField.getText().isEmpty()) {
                     System.out.println(logincourField.getText());
                     if (!db.checkLogin(logincourField.getText())) {
-                        signUp();
+                        regCourier.signUp(nameField.getText(), numberField.getText(), deliverycenterChoice.getValue().split(" ")[0], logincourField.getText(), passField.getText());
                         System.out.println("Успешная регистрация курьера!");
                         alertMessage.informationMessage("Успешная регистрация курьера!");
                         Utils.changeScene(event, "managermain.fxml", "Главная страница (Менеджер)");
@@ -97,20 +97,15 @@ public class RegCourierController {
                 ;
             }
         });
-
     }
 
-
-    private void signUp() throws SQLException {
-        String name = nameField.getText();
-        String number = numberField.getText();
-        String dcid = deliverycenterChoice.getValue().split(" ")[0];
-        String login = logincourField.getText();
-        String password = passField.getText();
-
-        User user = new User("",login, password, "1");
-        Courier courier = new Courier("",name,number,dcid,"");
-        DBConnection.getInstance().signUpUser(user);
-        DBConnection.getInstance().signUpCourier(courier, user);
-    }
+//    private ArrayList<String> getFieldsData(){
+//        ArrayList<String> data = new ArrayList<String>();
+//        data.add(nameField.getText().trim());
+//        data.add(numberField.getText().trim());
+//        data.add(deliverycenterChoice.getValue().split(" ")[0]);
+//        data.add(logincourField.getText().trim());
+//        data.add(passField.getText().trim());
+//        return data;
+//    }
 }

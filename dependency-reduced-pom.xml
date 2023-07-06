@@ -36,16 +36,17 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.0</version>
         <executions>
           <execution>
+            <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
             <configuration>
-              <shadedArtifactAttached>true</shadedArtifactAttached>
               <transformers>
                 <transformer>
-                  <mainClass>com.example.deliveryservice_courseproject/com.example.deliveryservice_courseproject.Main</mainClass>
+                  <mainClass>com.example.deliveryservice_courseproject.SuperMain</mainClass>
                 </transformer>
               </transformers>
             </configuration>

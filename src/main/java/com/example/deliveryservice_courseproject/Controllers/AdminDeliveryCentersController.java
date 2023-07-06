@@ -4,10 +4,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.example.deliveryservice_courseproject.Models.AdminDeliveryCenters;
 import com.example.deliveryservice_courseproject.Models.DBConnection;
 import com.example.deliveryservice_courseproject.Models.DeliveryCenter;
 import com.example.deliveryservice_courseproject.*;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -18,7 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AdminDeliveryCentersController {
 
-    ObservableList<DeliveryCenter> deliveryCenters;
+    AdminDeliveryCenters adminDeliveryCenters = new AdminDeliveryCenters();
+
 
     @FXML
     private ResourceBundle resources;
@@ -65,24 +66,11 @@ public class AdminDeliveryCentersController {
     AlertMessage am = new AlertMessage();
 
 
-    DBConnection db;
-
-    {
-        try {
-            db = DBConnection.getInstance();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
     void clearFields(){
         addresscenterField.clear();
         namecenterField.clear();
         centerIdField.clear();
     }
-
-
 
     @FXML
     void getDCOnClick (){
@@ -92,9 +80,7 @@ public class AdminDeliveryCentersController {
                 centerIdField.setText(dc.getId());
                 namecenterField.setText(dc.getName());
                 addresscenterField.setText(dc.getAddress());
-
             }
-
         });
     }
 
@@ -103,8 +89,7 @@ public class AdminDeliveryCentersController {
         namecenterColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         addresscenterColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
 
-        deliveryCenters = db.getDCdata();
-        DeliveryCenters.setItems(deliveryCenters);
+        DeliveryCenters.setItems(adminDeliveryCenters.getObservableList());
 
     }
 
@@ -122,7 +107,7 @@ public class AdminDeliveryCentersController {
                 try {
                     am.confirmationMessage("Вы действительно хотите добавить этот центр?");
                     if(am.checkconfirm()) {
-                        addCenter();
+                        adminDeliveryCenters.addDeliveryCenter(new AdminDeliveryCenters(getDataIdField(), getDataNameField(), getDataAddressField()));
                         clearFields();
                         initialize();
                         am.informationMessage("Центр успешно добавлен");
@@ -138,7 +123,7 @@ public class AdminDeliveryCentersController {
                 try {
                     am.confirmationMessage("Вы действительно хотите удалить этот центр?");
                     if(am.checkconfirm()) {
-                        deleteCenter();
+                        adminDeliveryCenters.deleteDC(getDataIdField());
                         clearFields();
                         initialize();
                         am.informationMessage("Центр успешно удалён");
@@ -155,7 +140,7 @@ public class AdminDeliveryCentersController {
                 try {
                     am.confirmationMessage("Вы действительно хотите обновить данные этого центра?");
                     if(am.checkconfirm()) {
-                        updateCenter();
+                        adminDeliveryCenters.updateDC(new AdminDeliveryCenters(getDataIdField(), getDataNameField(), getDataAddressField()));
                         clearFields();
                         initialize();
                         am.informationMessage("Данные успешно обновлены");
@@ -166,35 +151,17 @@ public class AdminDeliveryCentersController {
             }
         });
 
-
         backBtn.setOnAction(event -> Utils.changeScene(event,"adminmain.fxml", "Главная страница (Администратор)"));
     }
-
-    private void updateCenter() throws Exception {
-
-        String id = centerIdField.getText().trim();
-        String name = namecenterField.getText().trim();
-        String address = addresscenterField.getText().trim();
-
-        DeliveryCenter deliveryCenter = new DeliveryCenter(id,name,address);
-        deliveryCenter.updateDeliveryCenter(deliveryCenter);
+    private String getDataIdField(){
+        return centerIdField.getText().trim();
+    }
+    private String getDataNameField(){
+        return namecenterField.getText().trim();
+    }
+    private String getDataAddressField(){
+        return addresscenterField.getText().trim();
     }
 
-    private void addCenter() throws SQLException {
-        String id = centerIdField.getText().trim();
-        String name = namecenterField.getText().trim();
-        String address = addresscenterField.getText().trim();
-
-        DeliveryCenter deliveryCenter = new DeliveryCenter(id,name,address);
-//        db.addDeliveryCenter(deliveryCenter);
-        deliveryCenter.addDeliveryCenter(deliveryCenter);
-    }
-
-    private void deleteCenter() throws Exception {
-
-        String id = centerIdField.getText().trim();
-
-        db.deleteDeliveryCenter(id);
-    }
 
 }

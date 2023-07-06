@@ -4,6 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.example.deliveryservice_courseproject.Models.AdminPackages;
 import com.example.deliveryservice_courseproject.Models.DBConnection;
 import com.example.deliveryservice_courseproject.Models.Package;
 import com.example.deliveryservice_courseproject.Utils;
@@ -17,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import com.example.deliveryservice_courseproject.Other.AlertMessage;
 
 public class AdminPackagesController {
+    AdminPackages adminPackages = new AdminPackages();
 
     @FXML
     private ResourceBundle resources;
@@ -107,18 +109,6 @@ public class AdminPackagesController {
 
     @FXML
     private TextField weightField;
-
-    DBConnection db;
-
-    {
-        try {
-            db = DBConnection.getInstance();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    ObservableList<Package> packagesData;
     AlertMessage am = new AlertMessage();
 
 
@@ -170,8 +160,7 @@ public class AdminPackagesController {
         departcenterColumn.setCellValueFactory(new PropertyValueFactory<>("departcenter_id"));
         recievecenterColumn.setCellValueFactory(new PropertyValueFactory<>("receivingcenter_id"));
 
-        packagesData = db.getDataPackages();
-        packageTable.setItems(packagesData);
+        packageTable.setItems(adminPackages.getObservableList());
     }
 
     private boolean checkFields(){
@@ -194,9 +183,14 @@ public class AdminPackagesController {
                     am.confirmationMessage("Вы действительно хотите обновить данные этой посылки?");
                     if(am.checkconfirm()) {
                         try {
-                            updatePackage();
-                            clearFields();
-                            initialize();
+                            if(!typedeliveryField.getText().isEmpty() && !weightField.getText().isEmpty() && !statusField.getText().isEmpty()) {
+                                adminPackages.updatePackage(getNewPackage());
+                                clearFields();
+                                initialize();
+                            }
+                            else{
+                                am.warningMessage("Не заполнены обязательные поля");
+                            }
                             am.informationMessage("Обновление данных отправления прошло успешно");
                         }
                         catch (Exception e) {
@@ -218,10 +212,13 @@ public class AdminPackagesController {
                 try {
                     am.confirmationMessage("Вы действительно хотите добавить эту посылку?");
                     if(am.checkconfirm()) {
-                        addPackage();
-                        clearFields();
-                        initialize();
-                        am.informationMessage("Добавление прошло успешно");
+                        if(!typedeliveryField.getText().isEmpty() && !weightField.getText().isEmpty() && !statusField.getText().isEmpty()) {
+                            adminPackages.addPackage(getNewPackage());
+                            clearFields();
+                            initialize();
+                            am.informationMessage("Добавление прошло успешно");
+                        }
+                        else am.warningMessage("Не заполнены обязательные поля");
                     }
                     else{
                         ;
@@ -238,7 +235,7 @@ public class AdminPackagesController {
                 try {
                     am.confirmationMessage("Вы действительно хотите удалить эту посылку?");
                     if(am.checkconfirm()) {
-                        deletePackage();
+                        adminPackages.deletePackage(packageIdField.getText().trim());
                         clearFields();
                         initialize();
                         am.informationMessage("Удаление прошло успешно");
@@ -273,54 +270,5 @@ public class AdminPackagesController {
         Package pckge = new Package(id, type, weight, status, start_date, end_date, courier_id, sender_id, recepient_id, departcenter_id, recievingcenter_id);
 
         return pckge;
-    }
-
-    private void updatePackage() throws Exception {
-        Package pckge = getNewPackage();
-        if(!typedeliveryField.getText().isEmpty() && !weightField.getText().isEmpty() && !statusField.getText().isEmpty()) {
-//            if(!departcenterField.getText().isEmpty()){
-//
-//            }
-//            if (db.checkDc(pckge.getDepartcenter_id()) && db.checkDc(pckge.getReceivingcenter_id())
-//                    && (pckge.getType_of_delivery().equals("1") || pckge.getType_of_delivery().equals("0"))
-//                    && db.checkCourier(pckge.getCourier_id()) && db.checkClient(pckge.getSender_id()) && db.checkClient(pckge.getRecipient_id())) {
-//                db.updatePackage(pckge);
-//            } else {
-//                am.errorMessage("Данные не верны. Невозможно обновить данные посылки");
-//                throw new Exception();
-//            }
-            db.updatePackage(pckge);
-        }
-        else{
-            am.warningMessage("Не заполнены обязательные поля");
-        }
-    }
-
-    private void addPackage() throws Exception {
-
-        Package pckge = getNewPackage();
-        if(!typedeliveryField.getText().isEmpty() && !weightField.getText().isEmpty() && !statusField.getText().isEmpty()) {
-//            if (db.checkDc(pckge.getDepartcenter_id()) && db.checkDc(pckge.getReceivingcenter_id())
-//                    && (pckge.getType_of_delivery().equals("1") || pckge.getType_of_delivery().equals("0"))
-//                    && db.checkCourier(pckge.getCourier_id()) && db.checkClient(pckge.getSender_id()) && db.checkClient(pckge.getRecipient_id())) {
-//                db.addPackage(pckge);
-//
-//            }
-//            else {
-//                am.errorMessage("Данные не верны. Невозможно добавить новую посылку");
-//                throw new Exception();
-//            }
-            db.addPackage(pckge);
-        }
-        else{
-            am.warningMessage("Не заполнены обязательные поля");
-        }
-    }
-
-    private void deletePackage() throws Exception {
-
-        String id = packageIdField.getText().trim();
-
-        db.deletePackage(id);
     }
 }

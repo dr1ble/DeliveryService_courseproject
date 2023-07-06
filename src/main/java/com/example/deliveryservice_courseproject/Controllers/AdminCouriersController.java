@@ -2,8 +2,10 @@ package com.example.deliveryservice_courseproject.Controllers;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import com.example.deliveryservice_courseproject.Models.AdminCouriers;
 import com.example.deliveryservice_courseproject.Models.Courier;
 import com.example.deliveryservice_courseproject.Models.DBConnection;
 import com.example.deliveryservice_courseproject.Models.User;
@@ -21,6 +23,8 @@ import javafx.scene.layout.Pane;
 import com.example.deliveryservice_courseproject.Other.AlertMessage;
 
 public class AdminCouriersController {
+
+    AdminCouriers adminCouriers = new AdminCouriers();
 
     @FXML
     private ResourceBundle resources;
@@ -137,8 +141,7 @@ public class AdminCouriersController {
 
 
     void fillTable() throws SQLException {
-        couriersData = db.getCouriersData();
-        couriersTable.setItems(couriersData);
+        couriersTable.setItems(adminCouriers.getObservableList());
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -175,7 +178,7 @@ public class AdminCouriersController {
                 am.confirmationMessage("Вы действительно хотите обновить данные данного курьера?");
                 if(am.checkconfirm()) {
                     try {
-                        updateCourier();
+                        adminCouriers.updateCourier(courierIdField.getText(), couriernameField.getText(), couriernumberField.getText(), courierdcidField.getText(), courierIduserField.getText());
                         clearFields();
                         initialize();
                         am.informationMessage("Обновление данных прошло успешно");
@@ -201,7 +204,7 @@ public class AdminCouriersController {
                             if (!userloginField.getText().isEmpty() && !userpassField.getText().isEmpty()) {
                                 try {
                                     if (!db.checkLogin(userloginField.getText())) {
-                                        addCourier();
+                                        adminCouriers.addCourier(couriernameField.getText(), couriernumberField.getText(), courierdcidField.getText(), userloginField.getText(), userpassField.getText());
                                         getMainPane();
                                         clearFields();
                                         initialize();
@@ -230,7 +233,7 @@ public class AdminCouriersController {
                 try {
                     am.confirmationMessage("Вы действительно хотите удалить этого курьера?");
                     if(am.checkconfirm()) {
-                        deleteCourier();
+                        adminCouriers.deleteCourier(courierIdField.getText(), courierIduserField.getText());
                         clearFields();
                         initialize();
                         am.informationMessage("Удаление прошло успешно");
@@ -248,46 +251,16 @@ public class AdminCouriersController {
         backBtn.setOnAction(event -> Utils.changeScene(event,"adminmain.fxml", "Главная страница (Администратор)"));
     }
 
-    private void updateCourier() throws Exception {
 
-        String id = courierIdField.getText().trim();
-        String name = couriernameField.getText().trim();
-        String number = couriernumberField.getText().trim();
-        String dcid = courierdcidField.getText().trim();
-        String user_id = courierIduserField.getText().trim();
-
-        Courier courier = new Courier(id, name, number, dcid, user_id);
-        if(db.checkDc(dcid)) {
-            db.updateCourier(courier);
-        }
-        else{
-            throw new SQLException();
-        }
-    }
-
-    private void deleteCourier() throws Exception {
-
-        String id = courierIdField.getText().trim();
-        String user_id = courierIduserField.getText().trim();
-
-        db.deleteCourier(id, user_id);
-    }
-
-    private void addCourier() throws SQLException {
-        String name = couriernameField.getText().trim();
-        String number = couriernumberField.getText().trim();
-        String address = courierdcidField.getText().trim();
-        String login = userloginField.getText();
-        String password = userpassField.getText();
-
-        User user = new User("",login, password, "1");
-        Courier courier = new Courier("", name, number, address, "");
-        if(db.checkDc(address)) {
-            db.signUpUser(user);
-            db.signUpCourier(courier, user);
-        }
-        else{
-            throw new SQLException();
-        }
-    }
+//    private HashMap<String, String> getDataFields(){
+//        HashMap<String, String> data = new HashMap<>();
+//        data.put("id", courierIdField.getText().trim());
+//        data.put("name", couriernameField.getText().trim());
+//        data.put("number", couriernumberField.getText().trim());
+//        data.put("dcid", courierdcidField.getText().trim());
+//        data.put("user_id", courierIduserField.getText().trim());
+//        data.put("login", userloginField.getText().trim());
+//        data.put("password", userpassField.getText().trim());
+//        return data;
+//    }
 }

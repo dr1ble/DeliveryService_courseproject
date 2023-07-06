@@ -4,6 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.example.deliveryservice_courseproject.Models.AdminClients;
 import com.example.deliveryservice_courseproject.Models.Client;
 import com.example.deliveryservice_courseproject.Models.DBConnection;
 import com.example.deliveryservice_courseproject.Models.User;
@@ -17,6 +18,8 @@ import javafx.scene.layout.Pane;
 
 
 public class AdminClientsController {
+
+    AdminClients adminClients = new AdminClients();
 
     @FXML
     private ResourceBundle resources;
@@ -96,7 +99,6 @@ public class AdminClientsController {
     @FXML
     private Button userregBtn;
 
-    ObservableList<Client> clientsData;
 
     DBConnection db;
 
@@ -140,8 +142,7 @@ public class AdminClientsController {
 
 
     void fillTable() throws SQLException {
-        clientsData = db.getClientsData();
-        clientsTable.setItems(clientsData);
+        clientsTable.setItems(adminClients.getObservableList());
 
         clientsidColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         clientsnameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -175,7 +176,8 @@ public class AdminClientsController {
                 try {
                     am.confirmationMessage("Вы действительно хотите обновить данные этого клиента?");
                     if(am.checkconfirm()) {
-                        updateClient();
+                        adminClients.updateClient(clientIdField.getText(), clientnameField.getText(), numberclientField.getText(),
+                                addressclientField.getText(), neardcidField.getText(), clientuseridField.getText());
                         clearFields();
                         initialize();
                         am.informationMessage("Обновление данных прошло успешно");
@@ -195,7 +197,7 @@ public class AdminClientsController {
                 try {
                     am.confirmationMessage("Вы действительно хотите удалить данного клиента?");
                     if(am.checkconfirm()) {
-                        deleteClient();
+                        adminClients.deleteClient(clientIdField.getText(), clientuseridField.getText());
                         clearFields();
                         initialize();
                         am.informationMessage("Удаление пользователя прошло успешно");
@@ -223,7 +225,7 @@ public class AdminClientsController {
                             if (!userloginField.getText().isEmpty() && !userpassField.getText().isEmpty()) {
                                 try {
                                     if (!db.checkLogin(userloginField.getText())) {
-                                        addClient();
+                                        adminClients.addClient(clientnameField.getText().trim(), numberclientField.getText(), addressclientField.getText(), neardcidField.getText(), userloginField.getText(), userpassField.getText());
                                         getMainPane();
                                         clearFields();
                                         initialize();
@@ -255,44 +257,36 @@ public class AdminClientsController {
     }
 
 
-    private void updateClient() throws Exception {
-
-        String id = clientIdField.getText().trim();
-        String name = clientnameField.getText().trim();
-        String number = numberclientField.getText().trim();
-        String address = addressclientField.getText().trim();
-        String idneardc = neardcidField.getText().trim();
-        String user_id = clientuseridField.getText().trim();
-
-        Client client = new Client(id, name, number, address, idneardc, user_id);
-        db.updateClient(client);
-    }
-
-    private void addClient() throws SQLException {
-        String name = clientnameField.getText().trim();
-        String number = numberclientField.getText().trim();
-        String address = addressclientField.getText().trim();
-        String neardc = neardcidField.getText().trim();
-        String login = userloginField.getText();
-        String password = userpassField.getText();
-
-        User user = new User("",login, password, "0");
-        Client client = new Client("", name, number, address, neardc, "");
-        if (db.checkDc(neardc)) {
-            db.signUpUser(user);
-            db.signUpClient(client, user);
-        }
-        else{
-            throw new SQLException();
-        }
-    }
-
-    private void deleteClient() throws Exception {
-
-        String id = clientIdField.getText().trim();
-        String user_id = clientuseridField.getText().trim();
-
-        db.deleteClient(id, user_id);
-    }
+//    private void updateClient() throws Exception {
+//
+//        String id = clientIdField.getText().trim();
+//        String name = clientnameField.getText().trim();
+//        String number = numberclientField.getText().trim();
+//        String address = addressclientField.getText().trim();
+//        String idneardc = neardcidField.getText().trim();
+//        String user_id = clientuseridField.getText().trim();
+//
+//        Client client = new Client(id, name, number, address, idneardc, user_id);
+//        db.updateClient(client);
+//    }
+//
+//    private void addClient() throws SQLException {
+//        String name = clientnameField.getText().trim();
+//        String number = numberclientField.getText().trim();
+//        String address = addressclientField.getText().trim();
+//        String neardc = neardcidField.getText().trim();
+//        String login = userloginField.getText();
+//        String password = userpassField.getText();
+//
+//        User user = new User("",login, password, "0");
+//        Client client = new Client("", name, number, address, neardc, "");
+//        if (db.checkDc(neardc)) {
+//            db.signUpUser(user);
+//            db.signUpClient(client, user);
+//        }
+//        else{
+//            throw new SQLException();
+//        }
+//    }
 
 }

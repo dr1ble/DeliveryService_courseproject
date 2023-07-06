@@ -17,6 +17,8 @@ public class Package {
         this.receivingcenter_id = receivingcenter_id;
     }
 
+    public Package(){};
+
     public String getType_of_delivery() {
         return type_of_delivery;
     }

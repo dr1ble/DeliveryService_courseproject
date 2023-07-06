@@ -12,6 +12,9 @@ public class DeliveryCenter {
         this.address = address;
     }
 
+    public DeliveryCenter() {
+    }
+
     public String getId() {
         return id;
     }
@@ -34,29 +37,5 @@ public class DeliveryCenter {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-
-    public void addDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException {
-
-        String insertDeliveryCenter = "INSERT INTO delivery_centers(name, address) VALUES(?,?)";
-        PreparedStatement prStInsertDC =  DBConnection.getInstance().getConnection().prepareStatement(insertDeliveryCenter);
-
-        prStInsertDC.setString(1, deliveryCenter.getName());
-        prStInsertDC.setString(2, deliveryCenter.getAddress());
-
-        prStInsertDC.executeUpdate();
-    }
-
-    public void updateDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
-        String updateDeliveryCenter = "UPDATE delivery_centers SET name =?, address =? WHERE id =?";
-        PreparedStatement prstupdateDC = DBConnection.getInstance().getConnection().prepareStatement(updateDeliveryCenter);
-
-        prstupdateDC.setString(1, deliveryCenter.getName());
-        prstupdateDC.setString(2, deliveryCenter.getAddress());
-        prstupdateDC.setString(3, deliveryCenter.getId());
-
-
-        prstupdateDC.executeUpdate();
     }
 }

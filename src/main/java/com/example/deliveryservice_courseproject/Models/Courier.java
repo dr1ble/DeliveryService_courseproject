@@ -11,6 +11,9 @@ public class Courier {
         this.user_id = user_id;
     }
 
+    public Courier() {
+    }
+
     public String getId() {
         return id;
     }

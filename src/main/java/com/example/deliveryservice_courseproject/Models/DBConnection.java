@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DBConnection {
 
@@ -305,8 +306,8 @@ public class DBConnection {
     }
 
 
-    public ObservableList<DeliveryCenter> getDCdata() throws SQLException {
-        ObservableList<DeliveryCenter> list = FXCollections.observableArrayList();
+    public ArrayList getDCdata() throws SQLException {
+        ArrayList list = new ArrayList<>();
         PreparedStatement ps = getConnection().prepareStatement("select * from delivery_centers");
         ResultSet rs = ps.executeQuery();
         while (rs.next()){
@@ -330,22 +331,6 @@ public class DBConnection {
         }
         return Integer.parseInt(accesslevel);
     }
-
-//    public void acceptPackage(String id, String status, String reciveCenterId, String sendCenterId, String dateSend, String courier_id) throws SQLException {
-////        String updatePackage = "UPDATE " + DBConsts.PACKAGES_TABLE + " SET " + DBConsts.PACKAGES_STATUS +  "=?" + "," +  DBConsts.PACKAGES_RECEIVINGCENTERID + "=?"
-////                + "," + DBConsts.PACKAGES_SENDCENTERID + "=?" + "," + DBConsts.PACKAGES_DATESTART + "=?" + "," +  DBConsts.PACKAGES_COURIERID + "=?"  + " WHERE " + DBConsts.PACKAGES_ID + "=?";
-//        String updatePackage = "UPDATE packages  SET status =?, receivingcenter_id =?, departcenter_id =?, date_start =?, courier_id =? WHERE id =?";
-//        PreparedStatement psUpdatePackage = getConnection().prepareStatement(updatePackage);
-//
-//        psUpdatePackage.setString(1, status);
-//        psUpdatePackage.setString(2, reciveCenterId);
-//        psUpdatePackage.setString(3, sendCenterId);
-//        psUpdatePackage.setString(4, dateSend);
-//        psUpdatePackage.setString(5, courier_id);
-//        psUpdatePackage.setString(6, id);
-//
-//        psUpdatePackage.executeUpdate();
-//    }
 
     public void acceptPackage(String id, String status, String sendCenterId, String dateSend, String courier_id) throws SQLException {
 //        String updatePackage = "UPDATE " + DBConsts.PACKAGES_TABLE + " SET " + DBConsts.PACKAGES_STATUS +  "=?" + "," +  DBConsts.PACKAGES_RECEIVINGCENTERID + "=?"
@@ -508,8 +493,8 @@ public class DBConnection {
         return resultSet.next(); // если есть хотя бы одна строка в результате запроса, значит логин существует
     }
 
-    public ObservableList<Courier> getCouriersData() throws SQLException {
-        ObservableList<Courier> list = FXCollections.observableArrayList();
+    public ArrayList getCouriersData() throws SQLException {
+        ArrayList list = new ArrayList();
         PreparedStatement ps = getConnection().prepareStatement("select * from couriers");
         ResultSet rs = ps.executeQuery();
         while (rs.next()){
@@ -609,28 +594,28 @@ public class DBConnection {
         preStatementPackages.executeUpdate();
     }
 
-//    public void updateDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
-//        String updateDeliveryCenter = "UPDATE delivery_centers SET name =?, address =? WHERE id =?";
-//        PreparedStatement prstupdateDC = getConnection().prepareStatement(updateDeliveryCenter);
-//
-//        prstupdateDC.setString(1, deliveryCenter.getName());
-//        prstupdateDC.setString(2, deliveryCenter.getAddress());
-//        prstupdateDC.setString(3, deliveryCenter.getId());
-//
-//
-//        prstupdateDC.executeUpdate();
-//    }
+    public void updateDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
+        String updateDeliveryCenter = "UPDATE delivery_centers SET name =?, address =? WHERE id =?";
+        PreparedStatement prstupdateDC = getConnection().prepareStatement(updateDeliveryCenter);
 
-//    public void addDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
-//
-//        String insertDeliveryCenter = "INSERT INTO delivery_centers(name, address) VALUES(?,?)";
-//        PreparedStatement prStInsertDC = getConnection().prepareStatement(insertDeliveryCenter);
-//
-//        prStInsertDC.setString(1, deliveryCenter.getName());
-//        prStInsertDC.setString(2, deliveryCenter.getAddress());
-//
-//        prStInsertDC.executeUpdate();
-//    }
+        prstupdateDC.setString(1, deliveryCenter.getName());
+        prstupdateDC.setString(2, deliveryCenter.getAddress());
+        prstupdateDC.setString(3, deliveryCenter.getId());
+
+
+        prstupdateDC.executeUpdate();
+    }
+
+    public void addDeliveryCenter(DeliveryCenter deliveryCenter) throws SQLException{
+
+        String insertDeliveryCenter = "INSERT INTO delivery_centers(name, address) VALUES(?,?)";
+        PreparedStatement prStInsertDC = getConnection().prepareStatement(insertDeliveryCenter);
+
+        prStInsertDC.setString(1, deliveryCenter.getName());
+        prStInsertDC.setString(2, deliveryCenter.getAddress());
+
+        prStInsertDC.executeUpdate();
+    }
 
     public void deleteDeliveryCenter(String id) throws SQLException {
         String deleteDC = "DELETE FROM delivery_centers WHERE id =?";

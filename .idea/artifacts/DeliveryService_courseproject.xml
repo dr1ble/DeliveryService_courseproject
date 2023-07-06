@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="DeliveryService_courseproject">
+    <output-path>$PROJECT_DIR$/out/artifacts/DeliveryService_courseproject</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="com.example.deliveryservice_courseproject.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="DeliveryService_courseproject.jar">
+        <element id="module-output" name="DeliveryService_courseproject" />
+      </element>
+    </root>
+  </artifact>
+</component>

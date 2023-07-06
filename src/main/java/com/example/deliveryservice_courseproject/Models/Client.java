@@ -13,6 +13,9 @@ public class Client {
         this.user_id = user_id;
     }
 
+    public Client() {
+    }
+
     public String getId() {
         return id;
     }

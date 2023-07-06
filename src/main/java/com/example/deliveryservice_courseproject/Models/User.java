@@ -10,6 +10,9 @@ public class User {
         this.accesslevel = accesslevel;
     }
 
+    public User() {
+    }
+
 
     public String getLogin() {
         return login;
